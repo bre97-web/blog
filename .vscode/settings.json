@@ -1,0 +1,32 @@
+{
+    "typescript.tsdk": "node_modules\\typescript\\lib",
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "css.format.newlineBetweenRules": true,
+    "javascript.format.semicolons": "remove",
+    "typescript.format.semicolons": "remove",
+    "html.format.wrapAttributes": "force-expand-multiline",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4,
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": true,
+    "editor.indentSize": 4,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "always",
+    },
+    "editor.cursorSmoothCaretAnimation": "on",
+    "mdx.server.enable": true,
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "[astro]": {
+        "editor.defaultFormatter": "astro-build.astro-vscode"
+    },
+    "[css]": {
+        "editor.defaultFormatter": "vscode.css-language-features",
+    },
+    "[postcss]": {
+        "editor.defaultFormatter": "vscode.css-language-features",
+    },
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features",
+    }
+}

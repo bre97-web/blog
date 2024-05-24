@@ -1,0 +1,14 @@
+{
+    "extends": "./node_modules/astro/tsconfigs/strict.json",
+    "compilerOptions": {
+        "rootDir": ".",
+        "outDir": "build",
+        "lib": [
+            "ESNext"
+        ],
+        "target": "ESNext",
+    },
+    "include": [
+        "src/**/*.ts",
+    ]
+}

@@ -1,0 +1,12 @@
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    .mask {
+        @apply fixed inset-0 opacity-25 scrim;
+    }
+    
+    .mask.only-small {
+        @apply pointer-events-auto md:pointer-events-none md:opacity-0;
+    }
+}

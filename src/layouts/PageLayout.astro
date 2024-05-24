@@ -1,0 +1,63 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import { WebsiteConfigurations } from "../consts";
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <BaseHead
+            title={WebsiteConfigurations.title}
+            description={WebsiteConfigurations.description}
+            keywords={["1", "11"]}
+        />
+    </head>
+    <body>
+        <div
+            class="grid grid-cols-1 container-grid relative surface-container-highest"
+        >
+            <span class="z-[1] sticky top-0">
+                <slot name="header" />
+            </span>
+
+            <!-- z-index: 1 -->
+            <div
+                id="content-container"
+                class="col-span-full grid container-main-grid z-[0] items-start"
+            >
+                <div class="z-[0] h-[calc(100vh-56px)] sticky top-[56px]">
+                    <slot name="navigation-drawer" />
+                </div>
+                <div
+                    id="content"
+                    class="-z-[1] min-h-[calc(100vh-56px)] rounded-[28px] mx-2 relative overflow-clip surface transition-all motion-easing-emphasized-decelerate motion-duration-emphasized-decelerate"
+                >
+                    <slot name="content" />
+                </div>
+            </div>
+
+            <!-- z-index: unknown -->
+            <slot name="footer" />
+        </div>
+        <script></script>
+
+        <style>
+            .container-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+            }
+            .container-main-grid {
+                grid-template-columns: auto 1fr;
+                grid-template-rows: auto 1fr;
+            }
+
+            .z-[2] {
+                grid-row: 1 / 2;
+            }
+
+            .-z-[1] {
+                grid-row: 2 / 3;
+            }
+        </style>
+    </body>
+</html>

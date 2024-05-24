@@ -1,0 +1,72 @@
+---
+import NavigationItem from "./NavigationItem.astro";
+
+interface Props {
+    activeLabel: string;
+}
+
+const { activeLabel } = Astro.props;
+
+const items = [
+    { label: "Home", url: "/", icon: "home" },
+    { label: "Blogs", url: "/blog", icon: "info" },
+];
+---
+
+<nav id="navigation-drawer" class="navigation-drawer">
+    <ul class="links">
+        {
+            items.map((e) => (
+                <NavigationItem
+                    label={e.label}
+                    url={e.url}
+                    active={activeLabel === e.label}
+                >
+                    <md-icon slot="icon">{e.icon}</md-icon>
+                </NavigationItem>
+            ))
+        }
+    </ul>
+</nav>
+
+<script>
+    import { navigationConfiguration } from "../../stores/navigationStore";
+
+    const navigationDrawerRef = document.querySelector("#navigation-drawer");
+
+    const maskRef = document.createElement("div");
+    maskRef.classList.add("mask", "only-small");
+    maskRef.style.setProperty("height", "100vh");
+    maskRef.style.setProperty("width", "100vw");
+    maskRef.style.setProperty("z-index", "-1");
+
+    const maskClicked = () => {
+        navigationConfiguration.setKey("isOpen", false);
+        maskRef.removeEventListener("click", maskClicked);
+    };
+
+    navigationConfiguration.listen((value) => {
+        if (value.isOpen) {
+            navigationDrawerRef?.classList.add("open");
+            maskRef.addEventListener("click", maskClicked);
+            navigationDrawerRef?.parentElement?.appendChild(maskRef);
+        } else {
+            maskRef.removeEventListener("click", maskClicked);
+            navigationDrawerRef?.classList.remove("open");
+            navigationDrawerRef?.parentElement?.removeChild(maskRef);
+        }
+    });
+</script>
+
+<style>
+    .navigation-drawer {
+        @apply fixed md:relative w-0 h-[inherit] opacity-0 rounded-r-[28px] md:surface-container-low md:on-surface max-h-screen secondary-container on-secondary-container overflow-auto text-nowrap flex-grow-0 flex-shrink-0 motion-easing-emphasized-accelerate motion-duration-emphasized-accelerate;
+        transition-property: width, color, background, opacity, border-radius;
+    }
+    .navigation-drawer.open {
+        @apply w-[280px] md:w-[336px] opacity-100 motion-easing-emphasized-decelerate motion-duration-emphasized-decelerate;
+    }
+    .links {
+        @apply flex flex-col gap-0.5 p-4 md:pl-0;
+    }
+</style>

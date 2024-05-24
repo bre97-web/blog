@@ -1,0 +1,32 @@
+---
+interface Props {
+    url: string
+    label: string
+    active: boolean
+}
+
+const { label, url, active } = Astro.props
+---
+<a href={url}>
+    <li class:list={["navigation-drawer-item", { 'active': active }]} >
+        <slot name="icon"></slot>
+        <span class="label md-typescale-title-medium">
+            { label }
+        </span>
+        <md-ripple></md-ripple>
+    </li>
+</a>
+
+<style>
+    
+.navigation-drawer-item {
+    @apply relative flex rounded-full md:rounded-l-none h-[56px] items-center pl-[24px] pr-[16px] select-none;
+
+    &>.label {
+        @apply pl-2;
+    }
+}
+.navigation-drawer-item.active {
+    @apply primary-container on-primary-container;
+}
+</style>

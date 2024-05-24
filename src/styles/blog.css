@@ -1,0 +1,156 @@
+
+#blog-top-app-bar-ref {
+    @apply h-[56px] px-4 flex items-center surface sticky top-0 z-[1];
+    transition-property: color, background-color;
+    transition-duration: 200ms;
+
+    &.on-scroll {
+        @apply surface-container;
+    }
+
+    & > #blog-top-app-bar-back-button-ref {
+        @apply z-[1];
+    }
+
+    
+    & > .actions {
+        @apply flex gap-0.5 z-[1] relative;
+    }
+    
+    & > span:has(#blog-top-app-bar-title-ref) {
+        @apply pl-[8px] flex-grow overflow-clip inline-flex h-full items-center;
+    }
+    & > span > #blog-top-app-bar-title-ref {
+        @apply on-surface line-clamp-1;
+    }
+    &:not(.title-appeared) > span > #blog-top-app-bar-title-ref {
+        opacity: 0;
+        animation-duration: 200ms;
+        animation-iteration-count: 1;
+        animation-name: top-app-bar-title-animation-out;
+    }
+    &.title-appeared > span > #blog-top-app-bar-title-ref {
+        opacity: 1;
+        animation-duration: 200ms;
+        animation-iteration-count: 1;
+        animation-name: top-app-bar-title-animation-in;
+    }
+}
+
+#blog-prose-ref {
+    @apply container mx-auto z-[0] px-8 pb-32 surface min-h-[calc(100vh-56px)] relative;
+
+    & > .article-header > #blog-title-ref {
+        @apply font-[900] on-surface mt-8;
+    }
+    & > .article-header > #blog-createtion-time-ref {
+        @apply on-surface-variant mt-8;
+    }
+    & > .article-header > #blog-tags-ref {
+        @apply flex flex-wrap gap-2 mt-4;
+        & > li {
+            @apply rounded-md px-2 py-1 secondary-container on-secondary-container;
+        }    
+    }
+    & > .article-header > #blog-description-ref {
+        @apply on-surface-variant mt-4;
+    }
+
+    & > #blog-content-ref {
+        @apply on-surface;
+    
+        & :is(h1, h2, h3, h4, h5, h6) {
+            @apply on-surface;
+        }
+        & :is(h1, h2, h3, h4, h5, h6) + p {
+            @apply mb-8 mt-2;
+        }
+        & p+:is(h1, h2, h3, h4, h5, h6) {
+            @apply mt-16;
+        }
+    
+        & h1 {
+            @apply headline-large font-[900];
+        }
+        & h2 {
+            @apply headline-medium font-bold;
+        }
+        & h3 {
+            @apply headline-small font-bold;
+        }
+        & :is(h4, h5, h6) {
+            @apply headline-small font-medium;
+        }
+    
+        & :is(p, i) {
+            @apply body-large;
+        }
+        & h1+p {
+            @apply mb-4;
+        }
+    
+        & pre {
+            @apply border rounded-[18px] p-4 overflow-auto mt-[16px] mb-[24px];
+        }
+    
+        & table {
+            @apply rounded-[18px] overflow-clip outline mx-auto my-8;
+    
+            & :is(thead, tbody) > tr > :is(th, td) {
+                @apply px-4 py-2 min-w-16 text-start;
+            }
+            & :is(thead, tbody) {
+                @apply on-surface overflow-auto;
+            }
+            & thead {
+                @apply font-bold secondary-container on-secondary-container;
+            }
+            & tbody tr:nth-of-type(2n) {
+                @apply surface-container;
+            }
+        }
+    
+        & ul {
+            @apply flex flex-col gap-2 pl-8;
+    
+            & li {
+                @apply label-large list-disc;
+            }
+            & li:last-child {
+                @apply mb-8;
+            }
+        }
+    
+        & ol {
+            @apply flex flex-col gap-2 pl-8;
+    
+            & li {
+                @apply label-large list-decimal;
+            }
+            & li:last-child {
+                @apply mb-8;
+            }
+        }
+    }
+}
+
+@keyframes top-app-bar-title-animation-out {
+    from {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}
+@keyframes top-app-bar-title-animation-in {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+}

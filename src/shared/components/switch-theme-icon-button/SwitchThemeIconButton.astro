@@ -1,0 +1,30 @@
+---
+
+---
+
+<md-icon-button id="switch-theme-icon-button" aria-label="Swicth theme">
+    <md-icon class="icon">dark_mode</md-icon>
+</md-icon-button>
+
+<script>
+    import type { MdIcon, MdIconButton } from "@material/web/all";
+    import { ThemeService } from '../../services/theme.service';
+
+    const darkButtonRef = document.querySelector("#switch-theme-icon-button",) as MdIconButton;
+    const darkButtonIconRef = darkButtonRef.querySelector(".icon") as MdIcon;
+
+    darkButtonRef.addEventListener("click", () => {
+        ThemeService.getInstance().setIsDark(!ThemeService.getInstance().getIsDark())
+
+        darkButtonIconRef.textContent = ThemeService.getInstance().getIsDark()
+            ? "light_mode"
+            : "dark_mode";
+    });
+
+    /**
+     * Init md-icon
+     */
+    darkButtonIconRef.textContent = ThemeService.getInstance().getIsDark()
+        ? "light_mode"
+        : "dark_mode";
+</script>

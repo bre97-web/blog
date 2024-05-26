@@ -1,26 +1,20 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
-import { WebsiteConfigurations } from "../consts";
+import BaseHead from "../core/head/components/BaseHead.astro";
 ---
 
 <!doctype html>
 <html lang="en">
     <head>
-        <BaseHead
-            title={WebsiteConfigurations.title}
-            description={WebsiteConfigurations.description}
-            keywords={["1", "11"]}
-        />
+        <BaseHead/>
     </head>
     <body>
         <div
-            class="grid grid-cols-1 container-grid relative surface-container-highest"
+            class="grid grid-cols-1 container-grid relative surface-container-highest z-0"
         >
             <span class="z-[1] sticky top-0">
                 <slot name="header" />
             </span>
 
-            <!-- z-index: 1 -->
             <div
                 id="content-container"
                 class="col-span-full grid container-main-grid z-[0] items-start"
@@ -36,10 +30,10 @@ import { WebsiteConfigurations } from "../consts";
                 </div>
             </div>
 
-            <!-- z-index: unknown -->
-            <slot name="footer" />
+            <div class="-z-[1]">
+                <slot name="footer" />
+            </div>
         </div>
-        <script></script>
 
         <style>
             .container-grid {
@@ -49,14 +43,6 @@ import { WebsiteConfigurations } from "../consts";
             .container-main-grid {
                 grid-template-columns: auto 1fr;
                 grid-template-rows: auto 1fr;
-            }
-
-            .z-[2] {
-                grid-row: 1 / 2;
-            }
-
-            .-z-[1] {
-                grid-row: 2 / 3;
             }
         </style>
     </body>

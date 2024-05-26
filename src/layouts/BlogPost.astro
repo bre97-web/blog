@@ -2,12 +2,11 @@
 import "../styles/blog.css";
 
 import type { CollectionEntry } from "astro:content";
-import BaseHead from "../components/BaseHead.astro";
-import FormattedDate from "../components/FormattedDate.astro";
-import { WebsiteConfigurations } from "../consts";
-import Footer from "../components/Footer.astro";
-import DarkButton from "../components/theme-changer/DarkButton.astro";
-import HctPicker from "../components/theme-changer/HctPicker.vue";
+import BaseHead from "../core/head/components/BaseHead.astro";
+import FormattedDate from "../shared/components/formatted-date/FormattedDate.astro";
+import Footer from "../core/footer/components/Footer.astro";
+import DarkButton from "../shared/components/switch-theme-icon-button/SwitchThemeIconButton.astro";
+import HctPicker from "../shared/components/theme-changer/HctPicker.vue";
 
 type Props = CollectionEntry<"blog">["data"];
 
@@ -17,7 +16,7 @@ const { title, description, creationTime, tags } = Astro.props;
 <html lang="en">
     <head>
         <BaseHead
-            title={`${WebsiteConfigurations.title} - ${title}`}
+            title={`${title}`}
             description={description}
         />
     </head>
@@ -41,7 +40,7 @@ const { title, description, creationTime, tags } = Astro.props;
 
             <div class="actions">
                 <DarkButton />
-                <HctPicker client:idle />
+                <HctPicker client:only="vue" />
             </div>
             <div aria-hidden="true" class="absolute inset-0 bottom-0">
                 <md-linear-progress
@@ -154,7 +153,7 @@ const { title, description, creationTime, tags } = Astro.props;
                 "#blog-top-app-bar-back-button-ref",
             ) as MdIconButton;
             backButton.addEventListener("click", () => {
-                window.location.replace("/blog");
+                window.location.replace("/post-list");
             });
         </script>
     </body>

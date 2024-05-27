@@ -1,0 +1,31 @@
+name: Build and Deploy to gh-pages
+
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types:
+      - trigger-build
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download content from content repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.DEPLOY_KEY }}
+          repository: bre97-web/blog-content
+          sparse-checkout: |
+            content
+          path: ./src/content  # 将下载的文件放到 content 目录下
+      - name: Build website
+        run: npm install && npm run build
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.GITHUB_TOKEN }} # 替换成你的部署密钥
+          folder: dist  # 构建后的文件所在目录

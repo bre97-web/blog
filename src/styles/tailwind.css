@@ -9,4 +9,10 @@
     .mask.only-small {
         @apply pointer-events-auto md:pointer-events-none md:opacity-0;
     }
+
+    
+* {
+    /* For testing */
+    /* @apply border border-black; */
+}
 }

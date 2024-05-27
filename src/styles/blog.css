@@ -1,3 +1,6 @@
+html {
+    scroll-behavior: smooth;
+}
 
 #blog-top-app-bar-ref {
     @apply h-[56px] px-4 flex items-center surface sticky top-0 z-[1];
@@ -38,7 +41,7 @@
 }
 
 #blog-prose-ref {
-    @apply container mx-auto z-[0] px-8 pb-32 surface min-h-[calc(100vh-56px)] relative;
+    @apply z-[0] px-8 pb-32 surface min-h-[calc(100vh-56px)] relative;
 
     & > .article-header > #blog-title-ref {
         @apply font-[900] on-surface mt-8;
@@ -58,9 +61,9 @@
 
     & > #blog-content-ref {
         @apply on-surface;
-    
+
         & :is(h1, h2, h3, h4, h5, h6) {
-            @apply on-surface;
+            @apply on-surface -mt-20 pt-20;
         }
         & :is(h1, h2, h3, h4, h5, h6) + p {
             @apply mb-8 mt-2;

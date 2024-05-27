@@ -1,4 +1,3 @@
-import { persistentAtom, persistentMap } from "@nanostores/persistent"
 import { map } from "nanostores"
 
 type Item = {

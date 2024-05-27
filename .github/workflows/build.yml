@@ -21,11 +21,11 @@ jobs:
           repository: bre97-web/blog-content
           sparse-checkout: |
             content
-          path: ./src/content  # 将下载的文件放到 content 目录下
+          path: ./temp
       - name: Build website
-        run: npm install && npm run build
+        run: cp -r ./temp/content/* ./src/content && npm install && npm run build
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          deploy_key: ${{ secrets.GITHUB_TOKEN }} # 替换成你的部署密钥
-          folder: dist  # 构建后的文件所在目录
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist

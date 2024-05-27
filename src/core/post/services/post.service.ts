@@ -12,12 +12,14 @@ class CPostService {
     protected readonly Contents: Array<TContent> = [
         {
             baseUrl: '/blog',
+            // @ts-ignore
             collectionName: 'blog',
             displayName: 'Blogs',
             posts: []
         },
         {
             baseUrl: '/angular-framework',
+            // @ts-ignore
             collectionName: 'angular-framework',
             displayName: 'Angular Framework',
             posts: []

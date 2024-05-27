@@ -1,16 +1,15 @@
 import rss from '@astrojs/rss'
-import { Posts } from '../content/Posts'
-import { WebsiteConfigurations } from '../consts'
+import { PostService } from '../core/post/services/post.service'
 
 export async function GET(context) {
-    const posts = await Posts.getAllPosts()
+    const posts = PostService.getInstance().getAllPosts()
     return rss({
-        title: WebsiteConfigurations.title,
-        description: WebsiteConfigurations.description,
+        title: `Bre97's Blog`,
+        description: `Here is bre97.`,
         site: context.site,
-        items: posts.map((series) => series.posts).map(post => ({
+        items: posts.map(post => ({
             ...post.data,
-            link: `/${series.baseUrl}/${post.slug}/`,
+            link: `/post/${post.slug}/`,
         })),
     })
 }

@@ -7,7 +7,8 @@ import vue from "@astrojs/vue"
 
 // https://astro.build/config
 export default defineConfig({
-    base: '/blog',
+    base: '/',
+    trailingSlash: 'never',
     site: 'https://bre97-blog.web.app',
     integrations: [
         mdx({

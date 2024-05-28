@@ -3,15 +3,14 @@
     "type": "module",
     "version": "0.0.1",
     "scripts": {
-        "dev": "astro dev",
-        "start": "astro dev",
-        "build": "astro check && astro build",
+        "dev": "astro --config ./astro.config.ghpage.mjs dev",
+        "start": "astro --config ./astro.config.ghpage.mjs dev",
+        "build:gh": "astro --config ./astro.config.ghpage.mjs check && astro --config ./astro.config.ghpage.mjs build",
+        "build:firebase": "astro --config ./astro.config.firebase.mjs check && astro --config ./astro.config.firebase.mjs build",
         "preview": "astro preview",
         "astro": "astro",
         "hosting": "firebase deploy --only hosting",
-        "deploy": "firebase deploy",
-        "lint": "gts lint",
-        "fix": "gts fix"
+        "deploy": "firebase deploy"
     },
     "dependencies": {
         "@astrojs/check": "^0.6.0",
@@ -21,8 +20,6 @@
         "@astrojs/tailwind": "^5.1.0",
         "@astrojs/vue": "^4.2.0",
         "@fontsource/roboto": "^5.0.13",
-        "@material-design-icons/font": "^0.14.13",
-        "@material-design-icons/svg": "^0.14.13",
         "@material/material-color-utilities": "^0.2.7",
         "@material/web": "^1.4.1",
         "@nanostores/vue": "^0.10.0",

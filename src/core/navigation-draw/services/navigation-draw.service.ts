@@ -46,13 +46,13 @@ class CNavigationDrawerService extends CAPersistentNavigationDrawerState impleme
             index: 0,
             label: 'Home',
             iconString: 'home',
-            url: '/',
+            url: `${import.meta.env.BASE_URL}`,
         },
         {
             index: 0,
             label: 'Posts',
             iconString: 'home',
-            url: 'post-list',
+            url: `${import.meta.env.BASE_URL}/post-list`,
         },
     ]
 

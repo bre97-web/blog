@@ -23,7 +23,7 @@ jobs:
             content
           path: ./temp
       - name: Build website
-        run: cp -r ./temp/content/* ./src/content && npm install && npm run build
+        run: cp -r ./temp/content/* ./src/content && npm install && npm run build:gh
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:

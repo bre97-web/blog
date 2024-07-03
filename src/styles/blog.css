@@ -41,22 +41,25 @@ html {
 }
 
 #blog-prose-ref {
-    @apply z-[0] px-8 pb-32 surface min-h-[calc(100vh-56px)] relative;
+    @apply z-[0] flex-grow-0 flex-shrink-0 px-8 pb-32 min-h-[calc(100vh-56px)] relative overflow-clip md:w-[calc(100vw-172px-16px)] lg:w-[calc(100vw-256px-256px-16px)] xl:w-[calc(100vw-336px-336px-16px)] lg:ml-[256px] xl:ml-[336px];
 
     & > .article-header > #blog-title-ref {
-        @apply font-[900] on-surface mt-8;
-    }
-    & > .article-header > #blog-createtion-time-ref {
-        @apply on-surface-variant mt-8;
-    }
-    & > .article-header > #blog-tags-ref {
-        @apply flex flex-wrap gap-2 mt-4;
-        & > li {
-            @apply rounded-md px-2 py-1 secondary-container on-secondary-container;
-        }    
+        @apply font-[900] on-surface pt-16;
     }
     & > .article-header > #blog-description-ref {
-        @apply on-surface-variant mt-4;
+        @apply on-surface-variant mt-2 italic;
+    }
+    & > .article-header > .blog-details {
+        @apply flex flex-col gap-4 my-8;
+        & > #blog-createtion-time-ref {
+            @apply on-surface-variant;
+        }
+        & > #blog-tags-ref {
+            @apply flex flex-wrap gap-2;
+            & > li {
+                @apply rounded-md px-2 py-1 primary-container on-primary-container;
+            }    
+        }
     }
 
     & > #blog-content-ref {

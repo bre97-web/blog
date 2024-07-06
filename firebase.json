@@ -1,0 +1,15 @@
+{
+    "hosting": {
+        "public": "dist",
+        "ignore": [
+            "firebase.json",
+            "src/**",
+            "server/**",
+            "public/**",
+            ".astro",
+            ".github",
+            ".vscode",
+            "**/node_modules/**"
+        ]
+    }
+}

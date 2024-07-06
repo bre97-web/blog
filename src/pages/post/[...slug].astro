@@ -5,15 +5,11 @@ import BlogPost from "../../layouts/BlogPost.astro";
 export async function getStaticPaths() {
   /**
    * Please complete the code here.
-   * Please confirm that there is an mdx file in the src/content/* folder.
+   * Please confirm that there is an mdx file in the src/content/blogs/* folder.
    *
-   * This project provides `blog` folder and `angular` folder by default.
+   * This project provides `blogs` folder by default.
    */
-  const blogPosts = await getCollection("blog");
-  const angularPosts = await getCollection("angular");
-  // const posts = await getCollection("your-blog-folder");
-
-  const posts = [...blogPosts, ...angularPosts];
+  const posts = await getCollection("blogs");
 
   /**
    * Copied.

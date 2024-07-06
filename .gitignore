@@ -25,3 +25,4 @@ pnpm-debug.log*
 .idea/
 package-lock.json
 /.firebase
+firebase-debug.log

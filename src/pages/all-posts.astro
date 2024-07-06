@@ -1,0 +1,51 @@
+---
+/**
+ * This page will show all mdx files.
+ */
+
+import Header from "../core/header/components/Header.astro";
+import Footer from "../core/footer/components/Footer.astro";
+import PageLayout from "../layouts/PageLayout.astro";
+import OpenNavigationButton from "../core/navigation-draw/components/OpenNavigationButton.astro";
+import Navigation from "../core/navigation-draw/components/Navigation.astro";
+import CollectionList from "../core/collection-list/CollectionList.astro";
+import { getCollection } from "astro:content";
+
+const blogCollection = await getCollection("blog");
+const angularCollection = await getCollection("angular");
+---
+
+<PageLayout>
+  <Header slot="header">
+    <OpenNavigationButton slot="start" />
+  </Header>
+
+  <Navigation slot="navigation-drawer" activeLabel="Posts" />
+
+  <div slot="content">
+    <div class="collection-list">
+      <h1 class="md-typescale-headline-medium collection-series-name">Blog</h1>
+      <CollectionList collection={blogCollection} />
+
+      <h1 class="md-typescale-headline-medium collection-series-name">
+        Angular
+      </h1>
+      <CollectionList collection={angularCollection} />
+    </div>
+  </div>
+
+  <Footer slot="footer" />
+</PageLayout>
+
+<style>
+  .collection-list {
+    @apply p-4 md:p-8;
+
+    & > h1.collection-series-name:first-child {
+      @apply mt-0;
+    }
+    & > h1.collection-series-name {
+      @apply mt-8 mb-2 on-surface;
+    }
+  }
+</style>

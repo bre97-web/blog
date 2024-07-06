@@ -1,16 +1,32 @@
 ---
-import { type CollectionEntry } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import BlogPost from "../../layouts/BlogPost.astro";
-import { PostService } from "../../core/post/services/post.service";
 
 export async function getStaticPaths() {
-    const posts = PostService.getInstance().getAllPosts();
-    return posts.map((post) => ({
-        params: {
-            slug: post.slug,
-        },
-        props: post,
-    }));
+  /**
+   * Please complete the code here.
+   * Please confirm that there is an mdx file in the src/content/* folder.
+   *
+   * This project provides `blog` folder and `angular` folder by default.
+   */
+  const blogPosts = await getCollection("blog");
+  const angularPosts = await getCollection("angular");
+  // const posts = await getCollection("your-blog-folder");
+
+  const posts = [...blogPosts, ...angularPosts];
+
+  /**
+   * Copied.
+   * @link https://docs.astro.build/en/guides/markdown-content/#example-dynamic-page-routing
+   */
+  return posts.map((post) => ({
+    params: {
+      slug: post.slug,
+    },
+    props: {
+      ...post,
+    },
+  }));
 }
 type Props = CollectionEntry<"post">;
 
@@ -19,5 +35,5 @@ const { Content } = await post.render();
 ---
 
 <BlogPost {...post.data} body={post.body}>
-    <Content />
+  <Content />
 </BlogPost>

@@ -5,26 +5,26 @@
 import "../../../styles/base.css";
 import "../../../styles/tailwind.css";
 import "@fontsource/roboto";
-import { BaseHeadService } from '../services/base-head.service'
+import { BaseHeadService } from "../services/base-head.service";
 
 interface Props {
-    title?: string;
-    description?: string;
-    image?: string;
-    keywords?: Array<string>;
-    language?: string;
-    author?: string;
-    canonicalUrl?: string;
+  title?: string;
+  description?: string;
+  image?: string;
+  keywords?: Array<string>;
+  language?: string;
+  author?: string;
+  canonicalUrl?: string;
 }
 
 const {
-    title = BaseHeadService.Title,
-    description = BaseHeadService.Description,
-    image = BaseHeadService.Image,
-    author = BaseHeadService.Author,
-    keywords = BaseHeadService.Keywords,
-    language = BaseHeadService.Language,
-    canonicalUrl = Astro.url,
+  title = BaseHeadService.Title,
+  description = BaseHeadService.Description,
+  image = BaseHeadService.Image,
+  author = BaseHeadService.Author,
+  keywords = BaseHeadService.Keywords,
+  language = BaseHeadService.Language,
+  canonicalUrl = Astro.url,
 } = Astro.props;
 ---
 
@@ -64,19 +64,21 @@ const {
 
 <!-- Material Design Styles & Components -->
 <script>
-    import "@material/web/all";
-    import { styles } from "@material/web/typography/md-typescale-styles";
-    document.adoptedStyleSheets.push(styles.styleSheet!);
-    import "material-symbols/rounded.css";
+  import "@material/web/all";
+  import { styles } from "@material/web/typography/md-typescale-styles";
+  document.adoptedStyleSheets.push(styles.styleSheet!);
+  import "material-symbols/rounded.css";
 </script>
 
 <!-- Dynamic Color Generator -->
 <script>
-    import { ThemeService } from "../../../shared/services/theme.service";
+  import { ThemeService } from "../../../shared/services/theme.service";
 
-    const stylesheet = new CSSStyleSheet();
-    ThemeService.getInstance().getAtom().subscribe((_) => {
-        stylesheet.replaceSync(ThemeService.getInstance().getStyleText());
-        document.adoptedStyleSheets.push(stylesheet);
+  const stylesheet = new CSSStyleSheet();
+  document.adoptedStyleSheets.push(stylesheet);
+  ThemeService.getInstance()
+    .getAtom()
+    .subscribe((_) => {
+      stylesheet.replaceSync(ThemeService.getInstance().getStyleText());
     });
 </script>

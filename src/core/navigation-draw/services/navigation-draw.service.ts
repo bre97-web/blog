@@ -52,7 +52,7 @@ class CNavigationDrawerService extends CAPersistentNavigationDrawerState impleme
             index: 0,
             label: 'Posts',
             iconString: 'home',
-            url: `${import.meta.env.BASE_URL}/post-list`,
+            url: `${import.meta.env.BASE_URL}/all-posts`,
         },
     ]
 
@@ -66,7 +66,7 @@ export class NavigationDrawerService {
     private static instance: CNavigationDrawerService | null = null
 
     public static getInstance() {
-        if(this.instance === null) {
+        if (this.instance === null) {
             this.instance = new CNavigationDrawerService()
         }
         return this.instance

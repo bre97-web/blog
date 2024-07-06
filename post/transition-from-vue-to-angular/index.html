@@ -1,0 +1,277 @@
+<!DOCTYPE html><html lang="en"> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v4.11.5"><meta lang="zh-Hans"><!-- Primary Meta Tags --><title>Transition from Vue to Angular</title><meta name="title" content="Transition from Vue to Angular"><meta name="description" content="从Vue过渡到Angular."><meta name="keywords" content="blog"><meta name="author" content="bre97"><meta name="language" content="zh-Hans"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://bre97-web.github.io/blog/post/transition-from-vue-to-angular"><meta property="og:title" content="Transition from Vue to Angular"><meta property="og:description" content="从Vue过渡到Angular."><meta property="og:image" content="https://bre97-web.github.io/blog/post/transition-from-vue-to-angular"><meta property="og:image:alt" content="从Vue过渡到Angular."><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://bre97-web.github.io/blog/post/transition-from-vue-to-angular"><meta property="twitter:title" content="Transition from Vue to Angular"><meta property="twitter:description" content="从Vue过渡到Angular."><meta property="twitter:image" content="https://bre97-web.github.io/blog/post/transition-from-vue-to-angular"><meta property="twitter:image:alt" content="从Vue过渡到Angular."><!-- Robots --><meta name="robots" content="index, follow"><!-- Material Design Styles & Components --><!-- Dynamic Color Generator --><style>@font-face{font-family:Material Symbols Rounded;font-style:normal;font-weight:100 700;font-display:block;src:url(/blog/_astro/material-symbols-rounded.BpkyuruM.woff2) format("woff2")}.material-symbols-rounded{font-family:Material Symbols Rounded;font-weight:400;font-style:normal;font-size:24px;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;word-wrap:normal;direction:ltr;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-feature-settings:"liga"}
+</style>
+<link rel="stylesheet" href="/blog/_astro/_slug_.C7gitx67.css">
+<link rel="stylesheet" href="/blog/_astro/_slug_.BtAAsL3h.css">
+<style>.slider-box[data-v-2de46d92]{position:relative}.slider-box>p[data-v-2de46d92]{padding-left:1rem;padding-right:1rem}.preview[data-v-301f5c19]{margin-left:1rem;margin-right:1rem;height:1.5rem;border-radius:9999px;border-width:1px}.hct-picker[data-v-31511906]{position:relative}.hct-picker .current-color-box[data-v-31511906]{margin-left:auto;margin-right:auto;margin-top:1rem;margin-bottom:1rem;height:44px;width:44px;border-radius:9999px}.hct-picker .hct-picker-sliders[data-v-31511906]{margin-bottom:1rem}.hct-picker .hct-picker-sliders[data-v-31511906]>:not([hidden])~:not([hidden]){--tw-space-y-reverse: 0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}
+</style><script type="module" src="/blog/_astro/hoisted.D_PmIfcy.js"></script></head> <body class="surface relative"> <header id="blog-top-app-bar-ref"> <md-icon-button id="blog-top-app-bar-back-button-ref" aria-label="Back to last page"> <md-icon>arrow_back</md-icon> </md-icon-button> <span> <h1 id="blog-top-app-bar-title-ref" class="md-typescale-title-medium"> Transition from Vue to Angular </h1> </span> <div class="actions"> <md-icon-button id="switch-theme-icon-button" aria-label="Swicth theme"> <md-icon class="icon">dark_mode</md-icon> </md-icon-button>  <style>astro-island,astro-slot,astro-static-slot{display:contents}</style><script>(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).only=e;window.dispatchEvent(new Event("astro:only"));})();;(()=>{var A=Object.defineProperty;var g=(i,o,a)=>o in i?A(i,o,{enumerable:!0,configurable:!0,writable:!0,value:a}):i[o]=a;var d=(i,o,a)=>g(i,typeof o!="symbol"?o+"":o,a);{let i={0:t=>m(t),1:t=>a(t),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(a(t)),5:t=>new Set(a(t)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(t),9:t=>new Uint16Array(t),10:t=>new Uint32Array(t)},o=t=>{let[l,e]=t;return l in i?i[l](e):void 0},a=t=>t.map(o),m=t=>typeof t!="object"||t===null?t:Object.fromEntries(Object.entries(t).map(([l,e])=>[l,o(e)]));class y extends HTMLElement{constructor(){super(...arguments);d(this,"Component");d(this,"hydrator");d(this,"hydrate",async()=>{var b;if(!this.hydrator||!this.isConnected)return;let e=(b=this.parentElement)==null?void 0:b.closest("astro-island[ssr]");if(e){e.addEventListener("astro:hydrate",this.hydrate,{once:!0});return}let c=this.querySelectorAll("astro-slot"),n={},h=this.querySelectorAll("template[data-astro-template]");for(let r of h){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("data-astro-template")||"default"]=r.innerHTML,r.remove())}for(let r of c){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("name")||"default"]=r.innerHTML)}let p;try{p=this.hasAttribute("props")?m(JSON.parse(this.getAttribute("props"))):{}}catch(r){let s=this.getAttribute("component-url")||"<unknown>",v=this.getAttribute("component-export");throw v&&(s+=` (export ${v})`),console.error(`[hydrate] Error parsing props for component ${s}`,this.getAttribute("props"),r),r}let u;await this.hydrator(this)(this.Component,p,n,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),this.dispatchEvent(new CustomEvent("astro:hydrate"))});d(this,"unmount",()=>{this.isConnected||this.dispatchEvent(new CustomEvent("astro:unmount"))})}disconnectedCallback(){document.removeEventListener("astro:after-swap",this.unmount),document.addEventListener("astro:after-swap",this.unmount,{once:!0})}connectedCallback(){if(!this.hasAttribute("await-children")||document.readyState==="interactive"||document.readyState==="complete")this.childrenConnectedCallback();else{let e=()=>{document.removeEventListener("DOMContentLoaded",e),c.disconnect(),this.childrenConnectedCallback()},c=new MutationObserver(()=>{var n;((n=this.lastChild)==null?void 0:n.nodeType)===Node.COMMENT_NODE&&this.lastChild.nodeValue==="astro:end"&&(this.lastChild.remove(),e())});c.observe(this,{childList:!0}),document.addEventListener("DOMContentLoaded",e)}}async childrenConnectedCallback(){let e=this.getAttribute("before-hydration-url");e&&await import(e),this.start()}async start(){let e=JSON.parse(this.getAttribute("opts")),c=this.getAttribute("client");if(Astro[c]===void 0){window.addEventListener(`astro:${c}`,()=>this.start(),{once:!0});return}try{await Astro[c](async()=>{let n=this.getAttribute("renderer-url"),[h,{default:p}]=await Promise.all([import(this.getAttribute("component-url")),n?import(n):()=>()=>{}]),u=this.getAttribute("component-export")||"default";if(!u.includes("."))this.Component=h[u];else{this.Component=h;for(let f of u.split("."))this.Component=this.Component[f]}return this.hydrator=p,this.hydrate},e,this)}catch(n){console.error(`[astro-island] Error hydrating ${this.getAttribute("component-url")}`,n)}}attributeChangedCallback(){this.hydrate()}}d(y,"observedAttributes",["props"]),customElements.get("astro-island")||customElements.define("astro-island",y)}})();</script><astro-island uid="F5fY5" component-url="/blog/_astro/HctPicker.DXJoeOis.js" component-export="default" renderer-url="/blog/_astro/client.DBwag1u8.js" props="{}" ssr="" client="only" opts="{&quot;name&quot;:&quot;HctPicker&quot;,&quot;value&quot;:&quot;vue&quot;}"></astro-island> </div> <div aria-hidden="true" class="absolute inset-0 bottom-0"> <md-linear-progress id="blog-reading-progress-ref" value="0" aria-label="Reading progress bar"></md-linear-progress> </div> </header> <div class="relative md:flex justify-between"> <main id="blog-prose-ref" class="flex-grow flex-shrink"> <section class="article-header"> <h1 id="blog-title-ref" class="md-typescale-display-large"> Transition from Vue to Angular </h1> <p id="blog-description-ref" class="md-typescale-body-medium"> 从Vue过渡到Angular. </p> <section class="blog-details"> <ul id="blog-tags-ref" class="md-typescale-label-small"> <li class="">angular</li><li class="">vue</li> </ul> <p id="blog-createtion-time-ref" class="md-typescale-label-small"> Sat May 11 2024 00:00:00 GMT+0000 (Coordinated Universal Time) </p> </section> </section> <div class="mt-16 mb-32" aria-hidden="true"> <svg aria-hidden="true" width="100%" height="8" fill="none" xmlns="http://www.w3.org/2000/svg"><pattern id="a" width="91" height="8" patternUnits="userSpaceOnUse"><g clip-path="url(#clip0_2426_11367)"><path d="M114 4c-5.067 4.667-10.133 4.667-15.2 0S88.667-.667 83.6 4 73.467 8.667 68.4 4 58.267-.667 53.2 4 43.067 8.667 38 4 27.867-.667 22.8 4 12.667 8.667 7.6 4-2.533-.667-7.6 4s-10.133 4.667-15.2 0S-32.933-.667-38 4s-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0" stroke="#E1E3E1" stroke-linecap="square"></path></g></pattern><rect width="100%" height="100%" fill="url(#a)"></rect> </svg> </div> <section id="blog-content-ref" class="md-typescale-body-large">  <p><em>由于本人在Angular之前学习过Vue, 本文将会以”从Vue转向Angular”的角度介绍Angular.</em></p>
+<h1 id="创建项目">创建项目</h1>
+<p><em>Angular与Vue很大的不同点在创建项目上出现了. 编写Vue时几乎所有时刻都可以自己安装依赖而不需要cli, 仅仅需要vue, vite, typescript这三个依赖就可以启动初始项目. Angular项目的官方依赖没有过度耦合, 包很多, 通常不会手动一个一个安装依赖.</em></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>npm i -g angular-cli</span></span>
+<span class="line"><span></span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>ng new angular-project</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>看看ng new为开发者创建的项目的依赖:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="json"><code><span class="line"><span style="color:#9ECBFF">&quot;dependencies&quot;</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;@angular/animations&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;^18.0.0&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;@angular/common&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;^18.0.0&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;@angular/compiler&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;^18.0.0&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;@angular/core&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;^18.0.0&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;@angular/forms&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;^18.0.0&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;@angular/platform-browser&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;^18.0.0&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;@angular/platform-browser-dynamic&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;^18.0.0&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;@angular/router&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;^18.0.0&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;rxjs&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;~7.8.0&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;tslib&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;^2.3.0&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;zone.js&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;~0.14.3&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">},</span></span>
+<span class="line"><span style="color:#9ECBFF">&quot;devDependencies&quot;</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;@angular-devkit/build-angular&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;^18.0.1&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;@angular/cli&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;^18.0.1&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;@angular/compiler-cli&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;^18.0.0&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;@types/jasmine&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;~5.1.0&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;autoprefixer&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;^10.4.19&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;jasmine-core&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;~5.1.0&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;karma&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;~6.4.0&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;karma-chrome-launcher&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;~3.2.0&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;karma-coverage&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;~2.2.0&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;karma-jasmine&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;~5.1.0&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;karma-jasmine-html-reporter&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;~2.1.0&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;postcss&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;^8.4.38&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;tailwindcss&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;^3.4.3&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;typescript&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;~5.4.2&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+<h1 id="项目结构">项目结构</h1>
+<h1 id="组件">组件</h1>
+<p>Angular中的组件与Vue的有很大的不同:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">Compartion</th><th style="text-align:left">Angular</th><th style="text-align:left">Vue</th></tr></thead><tbody><tr><td style="text-align:left">组件定义方式</td><td style="text-align:left">通过<code>@Component</code>和<code>class</code>定义</td><td style="text-align:left">通过SFC或<code>defineComponent</code>(或无类型提示的<code>{}</code>)定义</td></tr><tr><td style="text-align:left">组件使用方式</td><td style="text-align:left">通过<code>selector</code>使用组件</td><td style="text-align:left">通过import或<code>components</code>选项使用组件</td></tr><tr><td style="text-align:left">输入参数</td><td style="text-align:left">通过<code>@Input</code>定义</td><td style="text-align:left">通过<code>defineProps</code>或<code>props</code>声明</td></tr><tr><td style="text-align:left">输出事件</td><td style="text-align:left">通过<code>@output</code>定义, 通过调用它的<code>emit(...)</code>激活</td><td style="text-align:left">通过<code>defineEmits</code>或<code>emits</code>声明</td></tr><tr><td style="text-align:left">依赖注入</td><td style="text-align:left">通过<code>Service</code>层和<code>inject</code>注入</td><td style="text-align:left">通过<code>provide</code>和<code>inject</code>注入</td></tr></tbody></table>
+<h2 id="创建组件">创建组件</h2>
+<p>可通过<code>angular-cli</code>来自动创建组件相应的文件:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>ng generate component Button</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>或者手动地创建需要的文件:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">File Name</th><th style="text-align:left">Description</th><th style="text-align:right">Optional</th></tr></thead><tbody><tr><td style="text-align:left">*.component.ts</td><td style="text-align:left">组件的具体定义</td><td style="text-align:right">Required</td></tr><tr><td style="text-align:left">*.component.spec.ts</td><td style="text-align:left">测试文件</td><td style="text-align:right">Optional</td></tr><tr><td style="text-align:left">*.component.css</td><td style="text-align:left">样式</td><td style="text-align:right">Optional</td></tr><tr><td style="text-align:left">*.component.html</td><td style="text-align:left">结构</td><td style="text-align:right">Optional</td></tr></tbody></table>
+<p>其中<code>*.component.css</code>, <code>*.component.html</code>, <code>*.component.spec.ts</code>是可选的, <strong><code>*.component.ts</code>是必须的</strong>.</p>
+<h2 id="定义组件">定义组件</h2>
+<p>Angular的组件通过TS装饰器<code>@Component</code>定义, 它接收<strong>两个必要参数</strong>和其它可选参数:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">参数</th><th style="text-align:left">描述</th><th style="text-align:right">可选项</th></tr></thead><tbody><tr><td style="text-align:left"><code>selector</code></td><td style="text-align:left">选择器, 作为使用该组件时的标签名</td><td style="text-align:right">必须</td></tr><tr><td style="text-align:left"><code>template</code> or <code>templateUrl</code></td><td style="text-align:left">用于渲染DOM的HTML模板</td><td style="text-align:right">必须</td></tr><tr><td style="text-align:left"><code>style</code>, <code>styleUrl</code> or <code>styleUrls</code></td><td style="text-align:left">CSS</td><td style="text-align:right">可选</td></tr><tr><td style="text-align:left"><code>imports</code></td><td style="text-align:left">依赖</td><td style="text-align:right">可选</td></tr><tr><td style="text-align:left">…</td><td style="text-align:left">…</td><td style="text-align:right">…</td></tr></tbody></table>
+<p>如下代码创建了一个Button组件:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { Component } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> &#39;@angular/core&#39;</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">@</span><span style="color:#B392F0">Component</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">  selector: </span><span style="color:#9ECBFF">&#39;app-button&#39;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  template: </span><span style="color:#9ECBFF">`</span></span>
+<span class="line"><span style="color:#9ECBFF">    &lt;button class=&quot;filled&quot;&gt;I am a button&lt;/button&gt;</span></span>
+<span class="line"><span style="color:#9ECBFF">  `</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  style: </span><span style="color:#9ECBFF">`</span></span>
+<span class="line"><span style="color:#9ECBFF">    button.filled {</span></span>
+<span class="line"><span style="color:#9ECBFF">        background-color: blue;</span></span>
+<span class="line"><span style="color:#9ECBFF">        color: white;</span></span>
+<span class="line"><span style="color:#9ECBFF">    }</span></span>
+<span class="line"><span style="color:#9ECBFF">  `</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  standalone: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">})</span></span>
+<span class="line"><span style="color:#F97583">export</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> ButtonComponent</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+<p><em>根据Google官方提供的说法,</em></p>
+<h2 id="使用组件">使用组件</h2>
+<p>使用组件的步骤:</p>
+<ol>
+<li>引入组件</li>
+<li>将需要的组件放在<code>imports</code>中</li>
+<li>在模板中使用组件</li>
+</ol>
+<p>Angular不把import的名称作为组件标签名, 而是<strong>把<code>selector</code>作为组件标签名</strong>.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#6A737D">// Angular</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">/**</span></span>
+<span class="line"><span style="color:#6A737D"> * </span><span style="color:#F97583">@file</span><span style="color:#6A737D"> home.component.ts</span></span>
+<span class="line"><span style="color:#6A737D"> */</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { Component } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> &#39;@angular/core&#39;</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { ComponentA } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> &#39;./component-a.component&#39;</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">@</span><span style="color:#B392F0">Component</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">  selector: </span><span style="color:#9ECBFF">&#39;home&#39;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  standalone: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  imports: [ComponentA],</span></span>
+<span class="line"><span style="color:#E1E4E8">  template: </span><span style="color:#9ECBFF">`</span></span>
+<span class="line"><span style="color:#9ECBFF">    &lt;component-a&gt;&lt;/component-a&gt;</span></span>
+<span class="line"><span style="color:#9ECBFF">  `</span></span>
+<span class="line"><span style="color:#E1E4E8">})</span></span>
+<span class="line"><span style="color:#F97583">export</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> HomeComponent</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">/**</span></span>
+<span class="line"><span style="color:#6A737D"> * </span><span style="color:#F97583">@file</span><span style="color:#6A737D"> component-a.component.ts</span></span>
+<span class="line"><span style="color:#6A737D"> */</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { Component } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> &#39;@angular/core&#39;</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">@</span><span style="color:#B392F0">Component</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">  selector: </span><span style="color:#9ECBFF">&#39;component-a&#39;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  template: </span><span style="color:#9ECBFF">``</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  standalone: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">})</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">export</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> ComponentA</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"></span></code></pre>
+<h2 id="组件树">组件树</h2>
+<p>Angular把匹配的每一个HTML元素创建一个组件实例. 组件实例的HTML模板在与<code>selector</code>匹配的DOM元素中渲染, 这个DOM元素被称为这个组件的宿主元素.
+组件渲染的DOM被称为该组件的视图, 多个组件构成组件树.</p>
+<p>要点:</p>
+<ul>
+<li>Angular为所有匹配的HTML元素创建一个组件实例
+<ul>
+<li>匹配发生在Angular编译时</li>
+<li>运行时更改DOM不影响渲染结果</li>
+</ul>
+</li>
+<li>与<code>selector</code>匹配的DOM元素是该组件的宿主元素</li>
+<li>组件渲染的DOM叫视图</li>
+<li>多个视图组合后叫组件树</li>
+</ul>
+<h2 id="input">Input</h2>
+<p><code>@Input()</code>作为组件的输入参数, 它提供更高的可重用性和变化.</p>
+<p>如下代码创建了一个TestProp组件, 接收一个可选参数<code>value</code>, 取值为<code>any</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { Component, Input } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> &#39;@angular/core&#39;</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">@</span><span style="color:#B392F0">Component</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">  selector: </span><span style="color:#9ECBFF">&#39;app-test-prop&#39;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  standalone: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  imports: [],</span></span>
+<span class="line"><span style="color:#E1E4E8">  template: </span><span style="color:#9ECBFF">`</span></span>
+<span class="line"><span style="color:#9ECBFF">    &lt;p&gt;</span></span>
+<span class="line"><span style="color:#9ECBFF">      PROP VALUES: {{ value }}</span></span>
+<span class="line"><span style="color:#9ECBFF">    &lt;/p&gt;</span></span>
+<span class="line"><span style="color:#9ECBFF">  `</span></span>
+<span class="line"><span style="color:#E1E4E8">})</span></span>
+<span class="line"><span style="color:#F97583">export</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> TestPropComponent</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">  @</span><span style="color:#B392F0">Input</span><span style="color:#E1E4E8">() </span><span style="color:#FFAB70">value</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> any</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+<p>这是提供参数到TestProp组件的方式:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">section</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">app-test-prop</span><span style="color:#B392F0"> value</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;123&quot;</span><span style="color:#E1E4E8">&gt;&lt;/</span><span style="color:#85E89D">app-test-prop</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">section</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"></span></code></pre>
+<h2 id="可选参数">可选参数</h2>
+<p><code>@Input()</code>默认为可选参数.</p>
+<h2 id="必须参数">必须参数</h2>
+<p>向<code>@Input()</code>提供required参数:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#E1E4E8">@</span><span style="color:#B392F0">Input</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    required: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">}) </span><span style="color:#B392F0">value</span><span style="color:#E1E4E8">: any;</span></span>
+<span class="line"></span></code></pre>
+<h2 id="类型检查">类型检查</h2>
+<p>由于Angular天生基于Typescript, 它直接支持类型检查:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#E1E4E8">@</span><span style="color:#B392F0">Input</span><span style="color:#E1E4E8">() isOpen</span><span style="color:#F97583">!</span><span style="color:#E1E4E8">: boolean;</span></span>
+<span class="line"></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">section</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">app-test-prop</span><span style="color:#B392F0"> [isOpen]</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;true&quot;</span><span style="color:#E1E4E8">&gt;&lt;/</span><span style="color:#85E89D">app-test-prop</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">section</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"></span></code></pre>
+<h2 id="output">Output</h2>  </section> </main> <aside class="sticky top-[calc(56px+8px)] hidden md:block flex-grow-0 flex-shrink-0 max-h-[calc(100vh-56px-16px)] m-2"> <ul class="aside-catalog" data-astro-cid-64m4hnpg> <li data-astro-cid-64m4hnpg> <a href="#创建项目" data-astro-cid-64m4hnpg>创建项目</a> <a href="#项目结构" data-astro-cid-64m4hnpg>项目结构</a><a href="#组件" data-astro-cid-64m4hnpg>组件</a><a href="#创建组件" data-astro-cid-64m4hnpg>创建组件</a><a href="#定义组件" data-astro-cid-64m4hnpg>定义组件</a><a href="#使用组件" data-astro-cid-64m4hnpg>使用组件</a><a href="#组件树" data-astro-cid-64m4hnpg>组件树</a><a href="#input" data-astro-cid-64m4hnpg>Input</a><a href="#可选参数" data-astro-cid-64m4hnpg>可选参数</a><a href="#必须参数" data-astro-cid-64m4hnpg>必须参数</a><a href="#类型检查" data-astro-cid-64m4hnpg>类型检查</a><a href="#output" data-astro-cid-64m4hnpg>Output</a> </li> </ul>  </aside> </div> <footer class="surface-container-highest py-16 px-8 md:px-0 on-surface motion-easing-standard motion-duration-standard -z-[1]" data-astro-cid-3eopjstx> <div class="flex flex-col items-start md:grid grid-cols-12 gap-2 [&>*]:space-y-2 container mx-auto max-w-6xl" data-astro-cid-3eopjstx> <span class="col-span-1 grid place-items-end h-fit" data-astro-cid-3eopjstx> <md-icon data-astro-cid-3eopjstx>home</md-icon> </span> <section class="col-span-7" data-astro-cid-3eopjstx> <h1 class="md-typescale-title-medium" data-astro-cid-3eopjstx>Bre97&#39;s Blog</h1> <p class="md-typescale-body-medium" data-astro-cid-3eopjstx>Welcome!</p> </section> <div class="col-span-4 mt-8 md:mt-0" data-astro-cid-3eopjstx> <h1 class="md-typescale-title-medium" data-astro-cid-3eopjstx>Follow us</h1> <div class="follow-us" data-astro-cid-3eopjstx> <svg width="24" height="24" viewBox="0 0 24 24" data-astro-cid-3eopjstx> <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.066 9.645c.183 4.04-2.83 8.544-8.164 8.544-1.622 0-3.131-.476-4.402-1.291 1.524.18 3.045-.244 4.252-1.189-1.256-.023-2.317-.854-2.684-1.995.451.086.895.061 1.298-.049-1.381-.278-2.335-1.522-2.304-2.853.388.215.83.344 1.301.359-1.279-.855-1.641-2.544-.889-3.835 1.416 1.738 3.533 2.881 5.92 3.001-.419-1.796.944-3.527 2.799-3.527.825 0 1.572.349 2.096.907.654-.128 1.27-.368 1.824-.697-.215.671-.67 1.233-1.263 1.589.581-.07 1.135-.224 1.649-.453-.384.578-.87 1.084-1.433 1.489z" data-astro-cid-3eopjstx></path> </svg> <svg width="24" height="24" viewBox="0 0 24 24" data-astro-cid-3eopjstx> <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3 8h-1.35c-.538 0-.65.221-.65.778v1.222h2l-.209 2h-1.791v7h-3v-7h-2v-2h2v-2.308c0-1.769.931-2.692 3.029-2.692h1.971v3z" data-astro-cid-3eopjstx></path> </svg> <svg width="24" height="24" viewBox="0 0 24 24" data-astro-cid-3eopjstx> <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm2.218 18.616c-.354.069-.468-.149-.468-.336v-1.921c0-.653-.229-1.079-.481-1.296 1.56-.173 3.198-.765 3.198-3.454 0-.765-.273-1.389-.721-1.879.072-.177.312-.889-.069-1.853 0 0-.587-.188-1.923.717-.561-.154-1.159-.231-1.754-.234-.595.003-1.193.08-1.753.235-1.337-.905-1.925-.717-1.925-.717-.379.964-.14 1.676-.067 1.852-.448.49-.722 1.114-.722 1.879 0 2.682 1.634 3.282 3.189 3.459-.2.175-.381.483-.444.936-.4.179-1.413.488-2.037-.582 0 0-.37-.672-1.073-.722 0 0-.683-.009-.048.426 0 0 .46.215.777 1.024 0 0 .405 1.25 2.353.826v1.303c0 .185-.113.402-.462.337-2.782-.925-4.788-3.549-4.788-6.641 0-3.867 3.135-7 7-7s7 3.133 7 7c0 3.091-2.003 5.715-4.782 6.641z" data-astro-cid-3eopjstx></path> </svg> </div> </div> </div> </footer>   </body> </html>

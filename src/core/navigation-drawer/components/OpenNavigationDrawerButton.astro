@@ -1,0 +1,22 @@
+---
+
+---
+
+<md-icon-button id="navigation-drawer-toggle-button">
+  <md-icon>menu</md-icon>
+</md-icon-button>
+
+<script>
+  import type { MdIconButton } from "@material/web/iconbutton/icon-button";
+  import { NavigationDrawerService } from "../services/navigation-drawer.service";
+
+  const navigationDrawerToggleButtonRef = document.querySelector(
+    "#navigation-drawer-toggle-button"
+  ) as MdIconButton;
+
+  navigationDrawerToggleButtonRef?.addEventListener("click", () => {
+    NavigationDrawerService.getInstance().setIsOpen(
+      !NavigationDrawerService.getInstance().getIsOpen()
+    );
+  });
+</script>

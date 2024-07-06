@@ -1,6 +1,6 @@
 ---
-import { NavigationDrawerService } from "../services/navigation-draw.service";
-import NavigationItem from "../components/NavigationItem.astro";
+import { NavigationDrawerService } from "../services/navigation-drawer.service";
+import NavigationDrawerItem from "./NavigationDrawerItem.astro";
 
 interface Props {
   activeLabel: string;
@@ -15,20 +15,20 @@ const items = NavigationDrawerService.getInstance().getItems();
   <ul class="links">
     {
       items.map((e) => (
-        <NavigationItem
+        <NavigationDrawerItem
           label={e.label}
           href={e.url}
           active={activeLabel === e.label}
         >
           <md-icon slot="icon">{e.iconString}</md-icon>
-        </NavigationItem>
+        </NavigationDrawerItem>
       ))
     }
   </ul>
 </nav>
 
 <script>
-  import { NavigationDrawerService } from "../services/navigation-draw.service";
+  import { NavigationDrawerService } from "../services/navigation-drawer.service";
 
   const navigationDrawerRef = document.querySelector("#navigation-drawer");
 

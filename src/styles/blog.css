@@ -3,7 +3,7 @@ html {
 }
 
 #blog-top-app-bar-ref {
-    @apply h-[56px] px-4 flex items-center surface sticky top-0 z-[1];
+    @apply h-[64px] px-4 flex items-center surface sticky top-0 z-[1];
     transition-property: color, background-color;
     transition-duration: 200ms;
 
@@ -41,7 +41,7 @@ html {
 }
 
 #blog-prose-ref {
-    @apply z-[0] flex-grow-0 flex-shrink-0 px-8 pb-32 min-h-[calc(100vh-56px)] relative overflow-clip md:w-[calc(100vw-172px-16px)] lg:w-[calc(100vw-256px-256px-16px)] xl:w-[calc(100vw-336px-336px-16px)] lg:ml-[256px] xl:ml-[336px];
+    @apply z-[0] flex-grow-0 flex-shrink-0 px-8 pb-32 min-h-[calc(100vh-64px)] relative overflow-clip md:w-[calc(100vw-172px-16px-16px)] lg:w-[calc(100vw-256px-16px-16px)] xl:w-[calc(100vw-336px-336px-16px)] xl:ml-[336px];
 
     & > .article-header > #blog-title-ref {
         @apply font-[900] on-surface pt-16;

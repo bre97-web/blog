@@ -1,20 +1,18 @@
-import { defineConfig } from 'astro/config'
 import mdx from '@astrojs/mdx'
 import sitemap from '@astrojs/sitemap'
-import tailwind from "@astrojs/tailwind"
-
+import tailwindIntegration from '@astrojs/tailwind'
 import vue from "@astrojs/vue"
+import { defineConfig } from 'astro/config'
 
 // https://astro.build/config
 export default defineConfig({
     base: '/blog-dev',
-    trailingSlash: 'never',
+    trailingSlash: 'always',
     integrations: [
-        mdx({
-
-        }),
+        mdx(),
         sitemap(),
-        tailwind({
+        tailwindIntegration({
+            configFile: './tailwind.config.mjs',
             nesting: true,
             applyBaseStyles: false,
         }),

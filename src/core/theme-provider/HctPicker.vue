@@ -2,6 +2,8 @@
     <span
         class="hct-picker"
         id="hct-picker-window-wrapper"
+        transition:name="hct-picker"
+        transition:persist
     >
         <md-icon-button
             id="hct-picker-window-toggle-button"
@@ -74,13 +76,13 @@
 </template>
 
 <script setup lang="ts">
+import type { MdIconButton } from '@material/web/iconbutton/icon-button'
+import { MdMenu } from '@material/web/menu/menu'
+import { useStore } from '@nanostores/vue'
 import { ref } from 'vue'
 import HctSlider from './HctSlider.vue'
-import { MdMenu } from '@material/web/menu/menu'
-import type { MdIconButton } from '@material/web/iconbutton/icon-button'
-import { useStore } from '@nanostores/vue'
 import HctSliderPreview from './HctSliderPreview.vue'
-import { type TSourceColorHctRawObject, ThemeService } from '../../services/theme.service'
+import { type TSourceColorHctRawObject, ThemeConfigurationService } from './theme-configuration.service'
 
 const menuRef = ref<MdMenu | null>(null)
 const handleClicked = () => {
@@ -95,9 +97,9 @@ const toggleMenu = () => {
 }
 
 
-const themeState = useStore(ThemeService.getInstance().getAtom())
+const themeState = useStore(ThemeConfigurationService.getInstance().getAtom())
 const handleSliderChanged = (hctRawObjectOptions: Partial<TSourceColorHctRawObject>) => {
-    ThemeService.getInstance().setSourceColorRawObject(() => hctRawObjectOptions)
+    ThemeConfigurationService.getInstance().setSourceColorRawObject(() => hctRawObjectOptions)
 }
 </script>
 

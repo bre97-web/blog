@@ -1,7 +1,7 @@
 import { Hct, SchemeContent, hexFromArgb } from "@material/material-color-utilities"
 import { persistentMap } from "@nanostores/persistent"
-import { MaterialColors } from '../material-color'
-import { Strings } from "../Strings"
+import { Strings } from "../../shared/strings"
+import { MaterialColors } from './material-color'
 
 export type TSourceColorHctRawObject = {
     hue: number
@@ -10,27 +10,27 @@ export type TSourceColorHctRawObject = {
 }
 export type TContrastLevel = -1 | 0 | 0.5 | 1
 
-export const enum ContrastLevels {
+export enum EContrastLevel {
     Low = -1,
     Default = 0,
     Medium = 0.5,
     High = 1,
 }
 
-export interface IThemeService {
+export interface IThemeConfiguration {
     getSourceColorHex: () => string
     getSourceColorHct: () => Hct
     getStyleText: () => string
 }
 
-abstract class ACThemeState {
+abstract class ACThemeConfigurationState {
     private sourceColorHctRawObject: TSourceColorHctRawObject = {
         hue: 150,
         chroma: 50,
         tone: 50
     }
     private isDark: boolean = false
-    private contrastLevel: TContrastLevel = ContrastLevels.Default
+    private contrastLevel: TContrastLevel = EContrastLevel.Default
 
     public getSourceColorHctRawObject() {
         return this.sourceColorHctRawObject
@@ -55,7 +55,7 @@ abstract class ACThemeState {
     }
 }
 
-abstract class ACPersistentThemeState extends ACThemeState {
+abstract class ACPersistentThemeConfigurationState extends ACThemeConfigurationState {
     private themeAtom = persistentMap<{
         sourceColorHctRawObject: TSourceColorHctRawObject
         isDark: boolean
@@ -96,35 +96,35 @@ abstract class ACPersistentThemeState extends ACThemeState {
     }
 }
 
-class CThemeService extends ACPersistentThemeState implements IThemeService {
+class CThemeConfigurationService extends ACPersistentThemeConfigurationState implements IThemeConfiguration {
     public getSourceColorHex() {
         return hexFromArgb(Hct.from(this.getSourceColorHctRawObject().hue, this.getSourceColorHctRawObject().chroma, this.getSourceColorHctRawObject().tone).toInt())
     }
     public getSourceColorHct() {
         return Hct.from(this.getSourceColorHctRawObject().hue, this.getSourceColorHctRawObject().chroma, this.getSourceColorHctRawObject().tone)
     }
-    public getStyleText() {
+    public getStyleText(selector: string = ':root', tokenPrefix: string = 'md-sys-color') {
         const scheme = new SchemeContent(this.getSourceColorHct(), this.getIsDark(), this.getContrastLevel())
         const theme: Record<string, string> = {}
         for (const [key, value] of Object.entries(MaterialColors)) {
             theme[key] = hexFromArgb(value.getArgb(scheme))
         }
 
-        return `:root {${Object
+        return `${selector} {${Object
             .entries(theme)
-            .map(e => `--md-sys-color-${Strings.toKebabCase(e[0])}: ${e[1]};`)
+            .map(e => `--${tokenPrefix}-${Strings.toKebabCase(e[0])}: ${e[1]};`)
             .reduce((l, c) => l + c)}}`
     }
 }
 
-export class ThemeService {
-    private static instance: CThemeService | null = null
+export class ThemeConfigurationService {
+    private static instance: CThemeConfigurationService | null = null
 
     private constructor() { }
 
     public static getInstance() {
         if (this.instance === null) {
-            this.instance = new CThemeService()
+            this.instance = new CThemeConfigurationService()
         }
         return this.instance
     }

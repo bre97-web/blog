@@ -1,0 +1,32 @@
+---
+/**
+ * ThemeProvider will generates the Material Design Tokens in runtime.
+ */
+---
+
+<span id="theme-provider">
+    <slot />
+    <style
+        transition:name="md-styles"
+        transition:persist
+        is:inline
+        id="material-design-tokens-standalone-root"
+    ></style>
+</span>
+
+<script>
+    import { ThemeConfigurationService } from "./theme-configuration.service";
+
+    const styleElement = document.querySelector(
+        "#material-design-tokens-standalone-root",
+    )! as HTMLStyleElement;
+
+    ThemeConfigurationService.getInstance()
+        .getAtom()
+        .subscribe(() => {
+            styleElement.textContent =
+                ThemeConfigurationService.getInstance().getStyleText(
+                    "#theme-provider",
+                );
+        });
+</script>

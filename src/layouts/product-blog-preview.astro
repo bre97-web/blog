@@ -1,0 +1,365 @@
+---
+import Footer from "../core/footer/footer.astro";
+import HeaderDrop from "../core/header/header-drop.astro";
+import Header from "../core/header/header.astro";
+import HctPicker from "../core/theme-provider/HctPicker.vue";
+import SwitchThemeIconButton from "../core/theme-provider/switch-theme-icon-button.astro";
+import Catalog from "../core/catalog/catalog.astro";
+
+const { title, description, creationTime, tags, body } = Astro.props;
+---
+
+<div class="blog-preview at-top">
+    <span class="header">
+        <Header>
+            <md-icon-button slot="start" class="back-to-all-post-page-button">
+                <md-icon>arrow_back</md-icon>
+            </md-icon-button>
+            <md-icon-button slot="actions" toggle class="open-sidenav-button">
+                <md-icon>menu_open</md-icon>
+            </md-icon-button>
+            <SwitchThemeIconButton slot="actions" />
+            <HctPicker client:only="vue" slot="actions" />
+        </Header>
+        <HeaderDrop />
+    </span>
+
+    <article class="content">
+        <h1 class="article-title text-display-large">{title}</h1>
+        <p class="article-description text-title-medium">{description}</p>
+        <ul class="article-tags text-label-small">
+            {tags?.map((tag) => <li class="tag">{tag}</li>)}
+        </ul>
+        <p class="article-creation-time" class="text-label-small">
+            {creationTime}
+        </p>
+        <div class="mt-16 mb-32" aria-hidden="true">
+            <svg
+                aria-hidden="true"
+                width="100%"
+                height="8"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                ><pattern
+                    id="a"
+                    width="91"
+                    height="8"
+                    patternUnits="userSpaceOnUse"
+                    ><g clip-path="url(#clip0_2426_11367)"
+                        ><path
+                            d="M114 4c-5.067 4.667-10.133 4.667-15.2 0S88.667-.667 83.6 4 73.467 8.667 68.4 4 58.267-.667 53.2 4 43.067 8.667 38 4 27.867-.667 22.8 4 12.667 8.667 7.6 4-2.533-.667-7.6 4s-10.133 4.667-15.2 0S-32.933-.667-38 4s-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0"
+                            stroke="#E1E3E1"
+                            stroke-linecap="square"></path></g
+                    ></pattern
+                ><rect width="100%" height="100%" fill="url(#a)"></rect>
+            </svg>
+        </div>
+        <section class="prose">
+            <slot />
+        </section>
+    </article>
+
+    <nav class="sidenav">
+        <Catalog markdownRaw={body} />
+    </nav>
+
+    <span class="footer">
+        <Footer />
+    </span>
+</div>
+
+<script>
+    import { MdIconButton } from "@material/web/all";
+import { navigate } from "astro:transitions/client";
+import { NavigationService } from "../core/navigation/navigation.service";
+
+    const root = document.querySelector(".blog-preview")!;
+
+    const header = document.querySelector(".blog-preview>.header")!;
+    const articleTitle = document.querySelector(".article-title")!;
+
+    window.addEventListener("scroll", (e) => {
+        const { top, height } = articleTitle.getBoundingClientRect();
+
+        if (top + height - header.getBoundingClientRect().height <= 0) {
+            root.classList.remove("at-top");
+        } else {
+            root.classList.add("at-top");
+        }
+    });
+
+    const backButton = document.querySelector(".back-to-all-post-page-button")!;
+    backButton.addEventListener("click", () => {
+        navigate(
+            NavigationService.getLinks().find((e) => e.label === "Posts")!.url,
+        );
+    });
+
+    const openSidenavButton = document.querySelector(
+        ".open-sidenav-button",
+    )! as MdIconButton;
+    openSidenavButton.addEventListener("click", () => {
+        const currentSidenavState = root.classList.toggle("open-sidenav");
+        if (currentSidenavState) {
+            openSidenavButton.selected = true;
+        } else {
+            openSidenavButton.selected = false;
+        }
+    });
+</script>
+
+<style>
+    /* LAYOUT ONLT ! */
+    .blog-preview {
+        display: grid;
+        grid-template-rows: var(--header-height) 1fr auto;
+
+        --var-grid-side-gap-left: var(--grid-side-gap-left, 64px);
+        --var-grid-side-gap-right: var(--grid-side-gap-right, 64px);
+        --var-sidenav-width: var(--sidenav-width, 240px);
+        --header-padding-left: var(--var-grid-side-gap-left);
+        --header-padding-right: var(--var-grid-side-gap-left);
+
+        &.open-sidenav {
+            grid-template-columns:
+                var(--var-grid-side-gap-left) 1fr var(--var-sidenav-width)
+                var(--var-grid-side-gap-right);
+            @media (max-width: 600px) {
+                --grid-side-gap-left: 24px;
+                --grid-side-gap-right: 24px;
+            }
+            @media (min-width: 600px) {
+                --grid-side-gap-right: 0px;
+            }
+            @media (min-width: 1600px) {
+                --computed: calc((100vw - 1200px) / 2);
+                --grid-side-gap-left: var(--computed);
+                --grid-side-gap-right: calc(
+                    var(--computed) - var(--var-sidenav-width)
+                );
+            }
+
+            & > .content {
+                grid-row: 2/3;
+                grid-column: 2/3;
+            }
+            & > .sidenav {
+                grid-row: 2/3;
+                grid-column: 3/4;
+            }
+            & > .header {
+                grid-row: 1/2;
+                grid-column: 1/5;
+            }
+            & > .footer {
+                grid-row: 3/4;
+                grid-column: 2/3;
+            }
+        }
+        &:not(.open-sidenav) {
+            grid-template-columns: var(--var-grid-side-gap-left) 1fr var(
+                    --var-grid-side-gap-right
+                );
+            @media (max-width: 600px) {
+                --grid-side-gap-left: 24px;
+                --grid-side-gap-right: 24px;
+            }
+            @media (min-width: 1600px) {
+                --computed: calc((100vw - 1200px) / 2);
+                --grid-side-gap-left: var(--computed);
+                --grid-side-gap-right: var(--computed);
+            }
+
+            & > .header {
+                grid-row: 1/2;
+                grid-column: 1/4;
+            }
+            & > .content {
+                grid-row: 2/3;
+                grid-column: 2/3;
+            }
+            & > .footer {
+                grid-row: 3/4;
+                grid-column: 2/3;
+            }
+            & > .sidenav {
+                display: none;
+            }
+        }
+    }
+
+    /* STYLES ONLY (NO CONTENT) */
+    .blog-preview {
+        background-color: var(--md-sys-color-surface);
+
+        /* The height prop of the header component's is not writtable. It's used for computing content height. */
+        --header-height: 64px;
+        --sidenav-margin: 8px;
+
+        & > .header {
+            position: sticky;
+            top: 0;
+            transition-property: background-color;
+            transition-duration: 200ms;
+        }
+
+        & > .content {
+            background-color: var(--md-sys-color-surface);
+            min-height: calc(100svh - var(--header-height));
+        }
+        & > .sidenav {
+            min-height: calc(
+                100svh - var(--header-height) - var(--sidenav-margin) -
+                    var(--sidenav-margin)
+            );
+            max-height: calc(
+                100svh - var(--header-height) - var(--sidenav-margin) -
+                    var(--sidenav-margin)
+            );
+            max-width: var(--var-sidenav-width);
+            overflow: auto;
+            margin: var(--sidenav-margin);
+            color: var(--md-sys-color-on-secondary-container);
+            background-color: var(--md-sys-color-secondary-container);
+            border-radius: 28px;
+            position: sticky;
+            top: calc(var(--header-height) + var(--sidenav-margin));
+        }
+
+        &.at-top {
+            & > .header {
+                --header-drop-background-color: var(--md-sys-color-surface);
+                background-color: var(--md-sys-color-surface);
+            }
+        }
+        &:not(.at-top) {
+            & > .header {
+                --header-drop-background-color: transparent;
+                background-color: var(--md-sys-color-surface-container-high);
+            }
+        }
+    }
+
+    /* CONTENT */
+    .content {
+        & > .article-title {
+            font-weight: 900;
+            margin-top: 32px;
+            color: var(--md-sys-color-primary);
+        }
+        & > .article-description {
+            margin-top: 32px;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+        & > .article-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2px;
+            margin-top: 16px;
+            & > .tag {
+                border-radius: 4px;
+                padding: 2px 4px;
+                background-color: var(--md-sys-color-surface-variant);
+                color: var(--md-sys-color-on-surface-variant);
+            }
+        }
+        & > .article-creation-time {
+            color: var(--md-sys-color-on-surface-variant);
+            margin-top: 16px;
+        }
+    }
+</style>
+
+<style is:global>
+    html {
+        scroll-behavior: smooth;
+    }
+    .prose {
+        color: var(--md-sys-color-on-surface);
+        margin-bottom: calc(100svh - 224px - var(--header-height));
+
+        & :is(h1, h2, h3, h4, h5, h6) {
+            @apply text-on-surface -mt-20 pt-20;
+        }
+
+        & :is(h1, h2, h3, h4, h5, h6) + p {
+            @apply mb-8 mt-2;
+        }
+
+        & p + :is(h1, h2, h3, h4, h5, h6) {
+            @apply mt-16;
+        }
+
+        & h1 {
+            @apply text-headline-large font-[900];
+        }
+
+        & h2 {
+            @apply text-headline-medium font-bold;
+        }
+
+        & h3 {
+            @apply text-headline-small font-bold;
+        }
+
+        & :is(h4, h5, h6) {
+            @apply text-headline-small font-medium;
+        }
+
+        & :is(p, i) {
+            @apply text-body-large;
+        }
+
+        & h1 + p {
+            @apply mb-4;
+        }
+
+        & pre {
+            @apply border rounded-[18px] p-4 overflow-auto mt-[16px] mb-[24px];
+        }
+
+        & table {
+            @apply rounded-[18px] overflow-clip outline mx-auto my-8;
+
+            & :is(thead, tbody) > tr > :is(th, td) {
+                @apply px-4 py-2 min-w-16 text-start;
+            }
+
+            & :is(thead, tbody) {
+                @apply text-on-surface overflow-auto;
+            }
+
+            & thead {
+                @apply font-bold bg-secondary-container text-on-secondary-container;
+            }
+
+            & tbody tr:nth-of-type(2n) {
+                @apply bg-surface-container;
+            }
+        }
+
+        & ul {
+            @apply flex flex-col gap-2 pl-8;
+
+            & li {
+                @apply text-label-large list-disc;
+            }
+
+            & li:last-child {
+                @apply mb-8;
+            }
+        }
+
+        & ol {
+            @apply flex flex-col gap-2 pl-8;
+
+            & li {
+                @apply text-label-large list-decimal;
+            }
+
+            & li:last-child {
+                @apply mb-8;
+            }
+        }
+    }
+</style>

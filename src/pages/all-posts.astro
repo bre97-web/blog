@@ -3,43 +3,79 @@
  * This page will show all mdx files.
  */
 
-import Header from "../core/header/components/Header.astro";
-import Footer from "../core/footer/components/Footer.astro";
-import PageLayout from "../layouts/PageLayout.astro";
-import OpenNavigationDrawerButton from "../core/navigation-drawer/components/OpenNavigationDrawerButton.astro";
-import NavigationDrawer from "../core/navigation-drawer/components/NavigationDrawer.astro";
-import CollectionList from "../core/collection-list/CollectionList.astro";
 import { getCollection } from "astro:content";
+import { ViewTransitions } from "astro:transitions";
+import CollectionList from "../core/collection-list/collection-list.astro";
+import Footer from "../core/footer/footer.astro";
+import BaseHead from "../core/head/base-head.astro";
+import HeaderDrop from "../core/header/header-drop.astro";
+import Header from "../core/header/header.astro";
+import BottomAppBar from "../core/navigation/bottom-app-bar.astro";
+import NavigationRail from "../core/navigation/navigation-rail.astro";
+import HctPicker from "../core/theme-provider/HctPicker.vue";
+import SwitchThemeIconButton from "../core/theme-provider/switch-theme-icon-button.astro";
+import ThemeProvider from "../core/theme-provider/theme-provider.astro";
+import ProductHtml from "../layouts/product-html.layout.astro";
+import ProductPage from "../layouts/product-page.layout.astro";
 
 const blogCollection = await getCollection("blogs");
 ---
 
-<PageLayout>
-  <Header slot="header">
-    <OpenNavigationDrawerButton slot="start" />
-  </Header>
+<ProductHtml>
+    <BaseHead slot="head" />
+    <ViewTransitions slot="head" />
+    <ThemeProvider>
+        <ProductPage>
+            <BottomAppBar slot="bottom-app-bar" />
+            <NavigationRail slot="navigation-rail" />
+            <div class="sticky-header">
+                <Header>
+                    <SwitchThemeIconButton slot="actions" />
+                    <HctPicker client:only="vue" slot="actions" />
+                </Header>
+                <HeaderDrop />
+            </div>
+            <div class="page-content">
+                <div class="collection-list">
+                    <CollectionList collection={blogCollection} />
+                </div>
+                <Footer />
+            </div>
+        </ProductPage>
+    </ThemeProvider>
+</ProductHtml>
 
-  <NavigationDrawer slot="navigation-drawer" activeLabel="Posts" />
-
-  <div slot="content">
-    <div class="collection-list">
-      <h1 class="md-typescale-headline-medium collection-series-name">Blogs</h1>
-      <CollectionList collection={blogCollection} />
-    </div>
-  </div>
-
-  <Footer slot="footer" />
-
-  <style>
-    .collection-list {
-      @apply p-4 md:p-8;
-
-      & > h1.collection-series-name:first-child {
-        @apply mt-0;
-      }
-      & > h1.collection-series-name {
-        @apply mt-8 mb-2 on-surface;
-      }
+<style>
+    .sticky-header {
+        position: sticky;
+        top: 0;
+        background-color: var(--md-sys-color-surface);
+        z-index: 1;
+        @media (min-width: 840px) {
+            --header-padding-left: 60px;
+            --header-padding-right: 60px;
+        }
+        @media (min-width: 1600px) {
+            --header-width: 1600px;
+        }
     }
-  </style>
-</PageLayout>
+    .page-content {
+        max-width: 1600px;
+        padding: 24px;
+        @media (min-width: 840px) {
+            padding-left: 60px;
+            padding-right: 60px;
+        }
+        @media (min-width: 1600px) {
+            margin: auto;
+        }
+    }
+    .collection-list {
+        & > h1.collection-series-name:first-child {
+            @apply mt-0;
+        }
+        & > h1.collection-series-name {
+            @apply mt-8 mb-2 text-on-surface;
+        }
+    }
+</style>

@@ -1,114 +1,110 @@
 ---
-import Header from "../core/header/components/Header.astro";
-import Footer from "../core/footer/components/Footer.astro";
-import HeroBackground from "../core/hero-background/components/HeroBackground.vue";
-import OpenNavigationDrawerButton from "../core/navigation-drawer/components/OpenNavigationDrawerButton.astro";
-import NavigationDrawer from "../core/navigation-drawer/components/NavigationDrawer.astro";
-import PageLayout from "../layouts/PageLayout.astro";
+import { ViewTransitions } from "astro:transitions";
+import Footer from "../core/footer/footer.astro";
+import BaseHead from "../core/head/base-head.astro";
+import HeaderDrop from "../core/header/header-drop.astro";
+import Header from "../core/header/header.astro";
+import BottomAppBar from "../core/navigation/bottom-app-bar.astro";
+import NavigationRail from "../core/navigation/navigation-rail.astro";
+import HctPicker from "../core/theme-provider/HctPicker.vue";
+import SwitchThemeIconButton from "../core/theme-provider/switch-theme-icon-button.astro";
+import ThemeProvider from "../core/theme-provider/theme-provider.astro";
+import ProductHtml from "../layouts/product-html.layout.astro";
+import ProductPage from "../layouts/product-page.layout.astro";
 ---
 
-<PageLayout>
-  <Header slot="header">
-    <OpenNavigationDrawerButton slot="start" />
-  </Header>
+<ProductHtml>
+    <BaseHead slot="head" />
+    <ViewTransitions slot="head" />
+    <ThemeProvider>
+        <ProductPage>
+            <BottomAppBar slot="bottom-app-bar" />
+            <NavigationRail slot="navigation-rail" />
+            <div class="sticky-header">
+                <Header>
+                    <SwitchThemeIconButton slot="actions" />
+                    <HctPicker client:only="vue" slot="actions" />
+                </Header>
+                <HeaderDrop />
+            </div>
 
-  <NavigationDrawer slot="navigation-drawer" activeLabel="Home" />
+            <div class="page-content">
+                <div class="hero">
+                    <h1 class="hero-title text-display-large">
+                        Bre97-web's blog
+                    </h1>
+                    <div class="hero-background">
+                        <img
+                            class="hero-img"
+                            aria-hidden="true"
+                            loading="eager"
+                            fetchpriority="high"
+                            src="https://www.gstatic.com/images/icons/material/apps/fonts/1x/catalog/v5/heroes/noto-bg-light.jpg"
+                            srcset="https://www.gstatic.com/images/icons/material/apps/fonts/1x/catalog/v5/heroes/noto-bg-light.jpg=w1860 1x, https://www.gstatic.com/images/icons/material/apps/fonts/1x/catalog/v5/heroes/noto-bg-light.jpg=w3720 2x"
+                        />
+                    </div>
+                </div>
 
-  <div slot="content">
-    <div
-      class="relative w-full h-[calc(100vh-56px)] flex flex-col items-center justify-start gap-32"
-    >
-      <section
-        id="page-section"
-        class="relative text-center overflow-clip mt-32 space-y-8"
-      >
-        <p
-          id="page-section-subtitle"
-          class="md-typescale-display-small on-surface"
-        >
-          You're looking at
-        </p>
-        <h1
-          id="page-section-title"
-          class="md-typescale-display-large py-4 px-8 z-[1] w-full font-black relative inverse-on-surface"
-        >
-          Bre97's Blogs
-          <div class="bg surface-tint"></div>
-        </h1>
-      </section>
-
-      <div class="space-y-8">
-        <ul class="recommanded-cards">
-          <li>
-            <md-ripple></md-ripple>
-          </li>
-          <li>
-            <md-ripple></md-ripple>
-          </li>
-          <li>
-            <md-ripple></md-ripple>
-          </li>
-        </ul>
-
-        <div class="flex justify-end">
-          <md-filled-button>
-            Explorer
-            <md-icon slot="icon">link</md-icon>
-          </md-filled-button>
-        </div>
-      </div>
-
-      <HeroBackground client:load />
-    </div>
-  </div>
-
-  <Footer slot="footer" />
-</PageLayout>
+                <Footer />
+            </div>
+        </ProductPage>
+    </ThemeProvider>
+</ProductHtml>
 
 <style>
-  #page-section > *,
-  #page-section > #page-section-title > .bg {
-    @apply transition-all motion-easing-emphasized-decelerate;
-  }
-
-  #page-section > #page-section-subtitle {
-    animation-name: title-in;
-    animation-duration: 1000ms;
-  }
-  #page-section > #page-section-title {
-    animation-name: title-in;
-    animation-duration: 2000ms;
-  }
-
-  #page-section > #page-section-title > .bg {
-    content: "";
-    @apply absolute inset-0 w-full h-full -z-[1];
-    animation-name: title-bg-in;
-    animation-delay: 500m;
-    animation-duration: 1000ms;
-  }
-
-  @keyframes title-in {
-    from {
-      transform: translateY(-100px);
+    .sticky-header {
+        position: sticky;
+        top: 0;
+        background-color: var(--md-sys-color-surface);
+        z-index: 1;
+        @media (min-width: 840px) {
+            --header-padding-left: 60px;
+            --header-padding-right: 60px;
+        }
+        @media (min-width: 1600px) {
+            --header-width: 1600px;
+        }
     }
-    to {
-      transform: translateY(0px);
+    .page-content {
+        max-width: 1600px;
+        padding: 24px;
+        @media (min-width: 840px) {
+            padding-left: 60px;
+            padding-right: 60px;
+        }
+        @media (min-width: 1600px) {
+            margin: auto;
+        }
     }
-  }
-  @keyframes title-bg-in {
-    from {
-      transform: translateX(-100%);
-    }
-    to {
-      transform: translateX(0px);
-    }
-  }
+    .hero {
+        height: 240px;
+        background-color: var(--md-sys-color-primary-container);
+        padding: 28px;
+        border-radius: 28px;
+        position: relative;
+        overflow: hidden;
+        z-index: 0;
 
-  ul.recommanded-cards {
-    @apply hidden md:flex flex-wrap justify-center gap-8;
-  }
-  ul.recommanded-cards > li {
-    @apply w-52 h-44 border rounded-[28px] relative surface;
-  }
+        & > .hero-title {
+            color: var(--md-sys-color-on-surface);
+            z-index: 1;
+        }
+        & > .hero-background {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: -1;
+            box-align: center;
+            height: 100%;
+            width: 100%;
+
+            & > .hero-img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+    }
 </style>

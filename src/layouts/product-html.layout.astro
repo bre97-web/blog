@@ -1,0 +1,21 @@
+---
+/**
+ * Global CSS
+ */
+import "@fontsource/roboto";
+import "@styles/tailwind.css";
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <slot name="head" />
+    </head>
+    <body>
+        <slot />
+    </body><script>
+        import "@material/web/all";
+        import "@material/web/labs/navigationbar/navigation-bar";
+        import "@material/web/labs/navigationtab/navigation-tab";
+    </script>
+</html>

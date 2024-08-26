@@ -1,0 +1,96 @@
+---
+/**
+ * 由astro content处理得到的markdown/mdx文件的内容
+ */
+interface Props {
+    markdownRaw: string;
+}
+
+const { markdownRaw } = Astro.props;
+
+// 得到所有的标题
+interface Heading {
+    headline: string;
+    children: Heading[];
+    href: string;
+}
+
+function extractMarkdownHeadings(markdownText: string): Heading[] {
+    const headings: { level: number; title: string; href: string }[] = [];
+    const regex = /^(#+)\s+(.+)$/gm;
+    let match: RegExpExecArray | null;
+
+    while ((match = regex.exec(markdownText)) !== null) {
+        const level = match[1].length;
+        const title = match[2];
+        const href = buildHref(title);
+
+        headings.push({ level, title, href });
+    }
+
+    return buildHeadingTree(headings);
+}
+
+function buildHeadingTree(
+    headings: { level: number; title: string; href: string }[],
+): Heading[] {
+    const tree: Heading[] = [];
+    let currentParent: Heading | null = null;
+
+    for (const heading of headings) {
+        const newHeading: Heading = {
+            headline: heading.title,
+            children: [],
+            href: heading.href,
+        };
+
+        if (currentParent === null || heading.level <= currentParent.level) {
+            // Top-level heading or same/higher level than current parent
+            tree.push(newHeading);
+            currentParent = newHeading;
+        } else {
+            // Child heading
+            currentParent.children.push(newHeading);
+        }
+    }
+
+    return tree;
+}
+
+function buildHref(href: string) {
+    return `#${href.replaceAll(" ", "-").toLowerCase()}`;
+}
+
+const headingTrees = extractMarkdownHeadings(markdownRaw);
+---
+
+<ul class="aside-catalog">
+    {
+        headingTrees.map((heading) => (
+            <li>
+                <a href={heading.href}>{heading.headline}</a>
+                {heading.children.map((child) => (
+                    <a href={child.href}>{child.headline}</a>
+                ))}
+            </li>
+        ))
+    }
+</ul>
+
+<style>
+    .aside-catalog {
+        @apply flex flex-col gap-2 px-4 py-4 h-full overflow-auto;
+
+        & > li {
+            @apply text-title-medium flex flex-col gap-1;
+
+            & > a:not(:first-child) {
+                @apply ml-2;
+            }
+
+            & > a {
+                @apply hover:underline underline-offset-1 hover:underline-offset-2 transition-all line-clamp-1;
+            }
+        }
+    }
+</style>

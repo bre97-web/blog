@@ -1,0 +1,30 @@
+---
+import CollectionListItem from "./collection-list-item.astro";
+
+interface Props {
+    collection: Array<any>;
+}
+
+const { collection } = Astro.props;
+---
+
+<ul class="post-list">
+    {
+        collection.map((post) => (
+            <CollectionListItem
+                creationTime={post.data.creationTime}
+                title={post.data.title}
+                description={post.data.description}
+                fileName={post.id}
+                tags={post.data.tags}
+                slug={post.slug}
+            />
+        ))
+    }
+</ul>
+
+<style>
+    .post-list {
+        @apply flex flex-row flex-wrap gap-4 w-full;
+    }
+</style>

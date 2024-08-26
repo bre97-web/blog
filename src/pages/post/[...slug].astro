@@ -1,28 +1,31 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
-import BlogPost from "../../layouts/BlogPost.astro";
+import BaseHead from "../../core/head/base-head.astro";
+import ThemeProvider from "../../core/theme-provider/theme-provider.astro";
+import ProductBlogPreview from "../../layouts/product-blog-preview.astro";
+import ProductHtml from "../../layouts/product-html.layout.astro";
 
 export async function getStaticPaths() {
-  /**
-   * Please complete the code here.
-   * Please confirm that there is an mdx file in the src/content/blogs/* folder.
-   *
-   * This project provides `blogs` folder by default.
-   */
-  const posts = await getCollection("blogs");
+    /**
+     * Please complete the code here.
+     * Please confirm that there is an mdx file in the src/content/blogs/* folder.
+     *
+     * This project provides `blogs` folder by default.
+     */
+    const posts = await getCollection("blogs");
 
-  /**
-   * Copied.
-   * @link https://docs.astro.build/en/guides/markdown-content/#example-dynamic-page-routing
-   */
-  return posts.map((post) => ({
-    params: {
-      slug: post.slug,
-    },
-    props: {
-      ...post,
-    },
-  }));
+    /**
+     * Copied.
+     * @link https://docs.astro.build/en/guides/markdown-content/#example-dynamic-page-routing
+     */
+    return posts.map((post) => ({
+        params: {
+            slug: post.slug,
+        },
+        props: {
+            ...post,
+        },
+    }));
 }
 type Props = CollectionEntry<"post">;
 
@@ -30,6 +33,14 @@ const post = Astro.props;
 const { Content } = await post.render();
 ---
 
-<BlogPost {...post.data} body={post.body}>
+<!-- <BlogPost {...post.data} body={post.body}>
   <Content />
-</BlogPost>
+</BlogPost> -->
+<ProductHtml>
+    <BaseHead slot="head" />
+    <ThemeProvider>
+        <ProductBlogPreview {...post.data} body={post.body}>
+            <Content />
+        </ProductBlogPreview>
+    </ThemeProvider>
+</ProductHtml>

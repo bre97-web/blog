@@ -1,0 +1,167 @@
+---
+import { NavigationService } from "./navigation.service";
+---
+
+<div transition:persist="navigation-rail" class="navigation-rail">
+    {
+        NavigationService.getLinks().map((link) => (
+            <span class="navigation-rail-tab" data-href={link.url}>
+                <span class="indicator">
+                    <md-icon class="icon">{link.iconString}</md-icon>
+                </span>
+                <span class="label md-typescale-label-medium">
+                    {link.label}
+                </span>
+            </span>
+        ))
+    }
+</div>
+
+<script>
+    import { navigate } from "astro:transitions/client";
+    import { NavigationService } from "./navigation.service";
+
+    const rail = document.querySelector(".navigation-rail")! as HTMLElement;
+    const items = [...rail.children];
+
+    window.addEventListener("load", (_) => {
+        /**
+         * @event click 為navigation-rail中的navigation-rail-tab設置頁面導行, 同時激活對應的navigation-rail-tab
+         */
+        items.forEach((item) => {
+            item.addEventListener("click", (e) => {
+                navigate(
+                    (e.target as HTMLElement).getAttribute("data-href")!,
+                ).then(() => {
+                    items.forEach((tab) => {
+                        if (tab.classList.contains("active")) {
+                            tab.classList.remove("active");
+                        }
+                    });
+                    (e.target as HTMLElement).classList.add("active");
+                    NavigationService.url.set(
+                        (e.target as HTMLElement).getAttribute("data-href")!,
+                    );
+                });
+            });
+        });
+
+        /**
+         * @event load 初始化navigation-rail默認激活的navigation-rail-tab
+         */
+        if (items.findIndex((tab) => tab.classList.contains("active")) === -1) {
+            const url = new URL(window.location.href);
+            items.forEach((tab) => {
+                if (tab.getAttribute("data-href")! === url.pathname) {
+                    tab.classList.add("active");
+                }
+            });
+        }
+
+        NavigationService.url.subscribe((value) => {
+            items.forEach((tab) => {
+                if (tab.getAttribute("data-href") === value) {
+                    items.forEach((tab) => {
+                        if (tab.classList.contains("active")) {
+                            tab.classList.remove("active");
+                        }
+                    });
+                    tab.classList.add("active");
+                }
+            });
+        });
+    });
+</script>
+
+<style>
+    .navigation-rail {
+        width: 84px;
+        height: 100%;
+        background-color: var(--md-sys-color-surface-container);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 24px 0px;
+        overflow-y: auto;
+        gap: 8px;
+
+        @media (min-width: 600px) and (max-width: 840px) {
+            justify-content: center;
+        }
+
+        & > .navigation-rail-tab {
+            --container-height: 56px;
+            --container-width: 80px;
+            --indicator-height: 32px;
+            --indicator-width: 56px;
+
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            height: var(--container-height);
+            position: relative;
+            cursor: pointer;
+
+            & > * {
+                pointer-events: none;
+            }
+
+            & > .indicator {
+                height: var(--indicator-height);
+                width: var(--indicator-width);
+                margin: 0px 0px 8px;
+                border-radius: 16px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+                position: relative;
+
+                &::after {
+                    content: "";
+                    display: block;
+                    height: 100%;
+                    width: 100%;
+                    position: absolute;
+                    inset: 0;
+                }
+
+                & > .icon {
+                    z-index: 1;
+                    color: var(--md-sys-color-on-surface);
+                }
+
+                &::after,
+                & > .icon {
+                    transition-property: background-color, color,
+                        font-variation-settings, width;
+                    transition-duration: 100ms;
+                }
+            }
+            & > .label {
+                display: block;
+                text-align: center;
+                color: var(--md-sys-color-on-surface);
+            }
+            &:hover > .indicator::after {
+                background-color: var(--md-sys-color-surface-variant);
+            }
+
+            &.active {
+                .indicator > .icon {
+                    font-variation-settings:
+                        "FILL" 1,
+                        "wght" 400,
+                        "GRAD" 0,
+                        "opsz" 24;
+                    color: var(--md-sys-color-on-secondary-container);
+                    fill: var(--md-sys-color-on-secondary-container);
+                }
+                .indicator::after {
+                    width: 100%;
+                    background-color: var(--md-sys-color-secondary-container);
+                }
+            }
+        }
+    }
+</style>

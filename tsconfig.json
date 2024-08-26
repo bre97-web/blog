@@ -4,9 +4,41 @@
         "rootDir": ".",
         "outDir": "build",
         "lib": [
-            "ESNext"
+            "ES2022"
         ],
-        "target": "ESNext",
+        "target": "ES2022",
+        "module": "ES2022",
+        "moduleResolution": "bundler",
+        "importHelpers": true,
+        "noImplicitOverride": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "sourceMap": true,
+        "declaration": false,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "verbatimModuleSyntax": true,
+        "baseUrl": ".",
+        "paths": {
+            "@core/*": [
+                "/src/core/*"
+            ],
+            "@shared/*": [
+                "/src/shared/*"
+            ],
+            "@pages/*": [
+                "/src/pages/*"
+            ],
+            "@layouts/*": [
+                "/src/layouts/*"
+            ],
+            "@styles/*": [
+                "/src/styles/*"
+            ],
+        }
     },
     "include": [
         "src/**/*.ts",

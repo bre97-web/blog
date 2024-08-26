@@ -1,10 +1,7 @@
 {
-    "typescript.tsdk": "node_modules\\typescript\\lib",
     "files.eol": "\n",
     "files.insertFinalNewline": true,
     "css.format.newlineBetweenRules": true,
-    "javascript.format.semicolons": "remove",
-    "typescript.format.semicolons": "remove",
     "html.format.wrapAttributes": "force-expand-multiline",
     "editor.formatOnSave": true,
     "editor.tabSize": 4,
@@ -13,6 +10,11 @@
     "editor.indentSize": 4,
     "editor.codeActionsOnSave": {
         "source.fixAll": "always",
+        "source.fixAll.ts": "always",
+        "source.organizeImports": "always",
+        "source.organizeLinkDefinitions": "always",
+        "source.sortImports": "always",
+        "source.removeUnusedImports": "always",
     },
     "editor.cursorSmoothCaretAnimation": "on",
     "mdx.server.enable": true,
@@ -28,5 +30,14 @@
     },
     "[html]": {
         "editor.defaultFormatter": "vscode.html-language-features",
+    },
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "cSpell.words": [
+        "nanostores"
+    ],
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
     }
 }

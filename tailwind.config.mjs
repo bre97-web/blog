@@ -1,4 +1,6 @@
-import { ColorTokens, MotionTokens, TypographyTokens, } from '@glare-labs/tailwindcss-material-tokens'
+import { provideAll } from '@glare-labs/tailwindcss-material-tokens'
+
+const all = provideAll()
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -14,8 +16,6 @@ export default {
         lineHeight: false,
     },
     plugins: [
-        ...ColorTokens.FullTokens,
-        ...MotionTokens.FullTokens,
-        ...TypographyTokens.FullTokens,
+        ...all.allPlugins(),
     ],
 }

@@ -1,18 +1,22 @@
+@import url("material-symbols/outlined.css");
+@import url("@material/web/typography/md-typescale-styles");
+
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer utilities {
     .mask {
-        @apply fixed inset-0 opacity-25 scrim;
+        @apply fixed inset-0 opacity-25 bg-scrim;
     }
-    
+
     .mask.only-small {
         @apply pointer-events-auto md:pointer-events-none md:opacity-0;
     }
 
-    
-* {
-    /* For testing */
-    /* @apply border border-black; */
-}
+
+    * {
+        /* For testing */
+        /* @apply border border-black; */
+    }
 }

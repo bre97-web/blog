@@ -70,8 +70,8 @@ const { title, description, creationTime, tags, body } = Astro.props;
 
 <script>
     import { MdIconButton } from "@material/web/all";
-import { navigate } from "astro:transitions/client";
-import { NavigationService } from "../core/navigation/navigation.service";
+    import { navigate } from "astro:transitions/client";
+    import { NavigationService } from "../core/navigation/navigation.service";
 
     const root = document.querySelector(".blog-preview")!;
 
@@ -270,7 +270,7 @@ import { NavigationService } from "../core/navigation/navigation.service";
     }
 </style>
 
-<style is:global>
+<style>
     html {
         scroll-behavior: smooth;
     }

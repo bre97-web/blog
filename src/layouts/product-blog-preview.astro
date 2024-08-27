@@ -12,6 +12,7 @@ const { title, description, creationTime, tags, body } = Astro.props;
 <div class="blog-preview at-top">
     <span class="header">
         <Header>
+            <h1 class="header-title line-clamp-1">{title}</h1>
             <md-icon-button slot="start" class="back-to-all-post-page-button">
                 <md-icon>arrow_back</md-icon>
             </md-icon-button>
@@ -60,6 +61,7 @@ const { title, description, creationTime, tags, body } = Astro.props;
     </article>
 
     <nav class="sidenav">
+        <md-elevation></md-elevation>
         <Catalog markdownRaw={body} />
     </nav>
 
@@ -74,11 +76,19 @@ const { title, description, creationTime, tags, body } = Astro.props;
     import { NavigationService } from "../core/navigation/navigation.service";
 
     const root = document.querySelector(".blog-preview")!;
-
     const header = document.querySelector(".blog-preview>.header")!;
     const articleTitle = document.querySelector(".article-title")!;
+    const openSidenavButton = document.querySelector(
+        ".open-sidenav-button",
+    )! as MdIconButton;
+    const backButton = document.querySelector(".back-to-all-post-page-button")!;
 
-    window.addEventListener("scroll", (e) => {
+    const onBackToPostsPageButtonClick = () => {
+        navigate(
+            NavigationService.getLinks().find((e) => e.label === "Posts")!.url,
+        );
+    };
+    const onWindowScroll = () => {
         const { top, height } = articleTitle.getBoundingClientRect();
 
         if (top + height - header.getBoundingClientRect().height <= 0) {
@@ -86,83 +96,66 @@ const { title, description, creationTime, tags, body } = Astro.props;
         } else {
             root.classList.add("at-top");
         }
-    });
-
-    const backButton = document.querySelector(".back-to-all-post-page-button")!;
-    backButton.addEventListener("click", () => {
-        navigate(
-            NavigationService.getLinks().find((e) => e.label === "Posts")!.url,
-        );
-    });
-
-    const openSidenavButton = document.querySelector(
-        ".open-sidenav-button",
-    )! as MdIconButton;
-    openSidenavButton.addEventListener("click", () => {
+    };
+    const onOpenSidenavButtonClick = () => {
         const currentSidenavState = root.classList.toggle("open-sidenav");
         if (currentSidenavState) {
             openSidenavButton.selected = true;
         } else {
             openSidenavButton.selected = false;
         }
+    };
+
+    window.addEventListener("load", () => {
+        onWindowScroll();
+
+        backButton.addEventListener("click", onBackToPostsPageButtonClick);
+        window.addEventListener("scroll", onWindowScroll);
+        openSidenavButton.addEventListener("click", onOpenSidenavButtonClick);
     });
 </script>
 
 <style>
+    /* Variables */
+    .blog-preview {
+        --var-grid-side-gap-left: var(--grid-side-gap-left, 64px);
+        --var-grid-side-gap-right: var(--grid-side-gap-right, 64px);
+        --var-sidenav-width: var(--sidenav-width, 180px);
+
+        /* The height prop of the header component's is not writtable. It's used for computing content height. */
+        --header-height: 64px;
+        --header-padding-left: var(--var-grid-side-gap-left);
+        --header-padding-right: var(--var-grid-side-gap-left);
+
+        --sidenav-margin: 8px;
+    }
+
     /* LAYOUT ONLT ! */
     .blog-preview {
         display: grid;
         grid-template-rows: var(--header-height) 1fr auto;
 
-        --var-grid-side-gap-left: var(--grid-side-gap-left, 64px);
-        --var-grid-side-gap-right: var(--grid-side-gap-right, 64px);
-        --var-sidenav-width: var(--sidenav-width, 240px);
-        --header-padding-left: var(--var-grid-side-gap-left);
-        --header-padding-right: var(--var-grid-side-gap-left);
-
-        &.open-sidenav {
-            grid-template-columns:
-                var(--var-grid-side-gap-left) 1fr var(--var-sidenav-width)
-                var(--var-grid-side-gap-right);
-            @media (max-width: 600px) {
+        & {
+            @media (max-width: 400px) {
+                --grid-side-gap-left: 8px;
+                --grid-side-gap-right: 8px;
+            }
+            @media (min-width: 400px) {
                 --grid-side-gap-left: 24px;
                 --grid-side-gap-right: 24px;
             }
             @media (min-width: 600px) {
-                --grid-side-gap-right: 0px;
+                --grid-side-gap-left: 32px;
+                --grid-side-gap-right: 32px;
             }
-            @media (min-width: 1600px) {
-                --computed: calc((100vw - 1200px) / 2);
+            @media (min-width: 840px) {
+                --grid-side-gap-left: 42px;
+                --grid-side-gap-right: 42px;
+            }
+            @media (min-width: 1200px) {
+                --computed: calc((100vw - 960px) / 2);
                 --grid-side-gap-left: var(--computed);
-                --grid-side-gap-right: calc(
-                    var(--computed) - var(--var-sidenav-width)
-                );
-            }
-
-            & > .content {
-                grid-row: 2/3;
-                grid-column: 2/3;
-            }
-            & > .sidenav {
-                grid-row: 2/3;
-                grid-column: 3/4;
-            }
-            & > .header {
-                grid-row: 1/2;
-                grid-column: 1/5;
-            }
-            & > .footer {
-                grid-row: 3/4;
-                grid-column: 2/3;
-            }
-        }
-        &:not(.open-sidenav) {
-            grid-template-columns: var(--var-grid-side-gap-left) 1fr var(
-                    --var-grid-side-gap-right
-                );
-            @media (max-width: 600px) {
-                --grid-side-gap-left: 24px;
-                --grid-side-gap-right: 24px;
+                --grid-side-gap-right: var(--computed);
             }
             @media (min-width: 1600px) {
                 --computed: calc((100vw - 1200px) / 2);
@@ -172,14 +165,56 @@ const { title, description, creationTime, tags, body } = Astro.props;
 
             & > .header {
                 grid-row: 1/2;
-                grid-column: 1/4;
             }
             & > .content {
                 grid-row: 2/3;
-                grid-column: 2/3;
             }
             & > .footer {
                 grid-row: 3/4;
+            }
+            & > .sidenav {
+                grid-row: 2/3;
+            }
+        }
+
+        &.open-sidenav {
+            grid-template-columns: var(--var-grid-side-gap-left) 1fr var(
+                    --var-grid-side-gap-right
+                );
+            @media (min-width: 840px) {
+                grid-template-columns:
+                    var(--var-grid-side-gap-left) 1fr
+                    var(--var-sidenav-width)
+                    var(--var-grid-side-gap-right);
+            }
+
+            & > .content {
+                grid-column: 2/3;
+            }
+            & > .sidenav {
+                grid-column: 2/3;
+                @media (min-width: 840px) {
+                    grid-column: 3/4;
+                }
+            }
+            & > .header {
+                grid-column: 1/5;
+            }
+            & > .footer {
+                grid-column: 2/3;
+            }
+        }
+        &:not(.open-sidenav) {
+            grid-template-columns: var(--var-grid-side-gap-left) 1fr var(
+                    --var-grid-side-gap-right
+                );
+            & > .header {
+                grid-column: 1/4;
+            }
+            & > .content {
+                grid-column: 2/3;
+            }
+            & > .footer {
                 grid-column: 2/3;
             }
             & > .sidenav {
@@ -191,20 +226,23 @@ const { title, description, creationTime, tags, body } = Astro.props;
     /* STYLES ONLY (NO CONTENT) */
     .blog-preview {
         background-color: var(--md-sys-color-surface);
-
-        /* The height prop of the header component's is not writtable. It's used for computing content height. */
-        --header-height: 64px;
-        --sidenav-margin: 8px;
+        transition: 200ms;
 
         & > .header {
             position: sticky;
             top: 0;
             transition-property: background-color;
             transition-duration: 200ms;
+
+            & .header-title {
+                color: var(--md-sys-color-on-surface);
+                transition-property: opacity, top;
+                transition-duration: 150ms;
+                position: relative;
+            }
         }
 
         & > .content {
-            background-color: var(--md-sys-color-surface);
             min-height: calc(100svh - var(--header-height));
         }
         & > .sidenav {
@@ -216,14 +254,27 @@ const { title, description, creationTime, tags, body } = Astro.props;
                 100svh - var(--header-height) - var(--sidenav-margin) -
                     var(--sidenav-margin)
             );
-            max-width: var(--var-sidenav-width);
-            overflow: auto;
-            margin: var(--sidenav-margin);
-            color: var(--md-sys-color-on-secondary-container);
-            background-color: var(--md-sys-color-secondary-container);
+            width: var(--var-sidenav-width);
+            margin-top: var(--sidenav-margin);
+            margin-right: 0;
+            margin-bottom: var(--sidenav-margin);
+            margin-left: 0;
+            color: var(--md-sys-color-on-tertiary);
+            background-color: var(--md-sys-color-tertiary);
             border-radius: 28px;
             position: sticky;
             top: calc(var(--header-height) + var(--sidenav-margin));
+            display: flex;
+            justify-self: end;
+
+            transition-property: background-color, color, box-shaodw;
+            transition-duration: 200ms;
+        }
+        /* Elevation in sidenav */
+        &.open-sidenav > .sidenav {
+            @media (max-width: 840px) {
+                --md-elevation-level: 3;
+            }
         }
 
         &.at-top {
@@ -231,11 +282,19 @@ const { title, description, creationTime, tags, body } = Astro.props;
                 --header-drop-background-color: var(--md-sys-color-surface);
                 background-color: var(--md-sys-color-surface);
             }
+            & > .header .header-title {
+                opacity: 0;
+                top: var(--header-height);
+            }
         }
         &:not(.at-top) {
             & > .header {
                 --header-drop-background-color: transparent;
                 background-color: var(--md-sys-color-surface-container-high);
+            }
+            & > .header .header-title {
+                opacity: 1;
+                top: 0;
             }
         }
     }
@@ -254,7 +313,7 @@ const { title, description, creationTime, tags, body } = Astro.props;
         & > .article-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 2px;
+            gap: 4px;
             margin-top: 16px;
             & > .tag {
                 border-radius: 4px;
@@ -270,9 +329,13 @@ const { title, description, creationTime, tags, body } = Astro.props;
     }
 </style>
 
-<style>
+<style is:global>
     html {
         scroll-behavior: smooth;
+    }
+    body {
+        transition-property: background-color;
+        transition-duration: 200ms;
     }
     .prose {
         color: var(--md-sys-color-on-surface);

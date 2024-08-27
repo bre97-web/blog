@@ -9,9 +9,11 @@ import CollectionList from "../core/collection-list/collection-list.astro";
 import Footer from "../core/footer/footer.astro";
 import BaseHead from "../core/head/base-head.astro";
 import HeaderDrop from "../core/header/header-drop.astro";
+import HeaderTitle from "../core/header/header-title.astro";
 import Header from "../core/header/header.astro";
 import BottomAppBar from "../core/navigation/bottom-app-bar.astro";
 import NavigationRail from "../core/navigation/navigation-rail.astro";
+import SearchCollection from "../core/search-collection/search-collection.vue";
 import HctPicker from "../core/theme-provider/HctPicker.vue";
 import SwitchThemeIconButton from "../core/theme-provider/switch-theme-icon-button.astro";
 import ThemeProvider from "../core/theme-provider/theme-provider.astro";
@@ -30,12 +32,17 @@ const blogCollection = await getCollection("blogs");
             <NavigationRail slot="navigation-rail" />
             <div class="sticky-header">
                 <Header>
+                    <HeaderTitle />
                     <SwitchThemeIconButton slot="actions" />
                     <HctPicker client:only="vue" slot="actions" />
                 </Header>
                 <HeaderDrop />
             </div>
             <div class="page-content">
+                <SearchCollection
+                    collection={blogCollection}
+                    client:only="vue"
+                />
                 <div class="collection-list">
                     <CollectionList collection={blogCollection} />
                 </div>
@@ -47,27 +54,43 @@ const blogCollection = await getCollection("blogs");
 
 <style>
     .sticky-header {
+        --navigation-rail-width-computed: 84px;
+
         position: sticky;
         top: 0;
         background-color: var(--md-sys-color-surface);
         z-index: 1;
+        --header-padding-left: 24px;
+        --header-padding-right: 24px;
         @media (min-width: 840px) {
             --header-padding-left: 60px;
             --header-padding-right: 60px;
         }
         @media (min-width: 1600px) {
-            --header-width: 1600px;
+            --header-width: calc(
+                1600px - var(--navigation-rail-width-computed)
+            );
         }
     }
     .page-content {
-        max-width: 1600px;
+        --navigation-rail-width-computed: 84px;
+
         padding: 24px;
         @media (min-width: 840px) {
             padding-left: 60px;
             padding-right: 60px;
         }
         @media (min-width: 1600px) {
+            max-width: calc(1600px - var(--navigation-rail-width-computed));
+        }
+        @media (min-width: 1600px) {
             margin: auto;
+        }
+
+        & > :not([hidden]) ~ :not([hidden]) {
+            --space-y-reverse: 0;
+            margin-top: calc(32px * calc(1 - var(--space-y-reverse)));
+            margin-bottom: calc(32px * var(--space-y-reverse));
         }
     }
     .collection-list {

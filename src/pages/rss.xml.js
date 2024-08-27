@@ -6,7 +6,7 @@ export async function GET(context) {
         description: `Here is bre97.`,
         site: context.site,
         items: await pagesGlobToRssItems(
-            import.meta.glob('./blogs/*.{md,mdx}'),
+            import.meta.glob('./**/content/blogs/*.{md,mdx}'),
           ),
     })
 }

@@ -6,6 +6,7 @@
             placeholder="Type here to search"
             @input="onSearchInput"
         />
+        <md-elevation></md-elevation>
     </div>
 </template>
 
@@ -15,16 +16,20 @@ import { SearchCollectionService } from "./search-collection.service";
 const onSearchInput = (e: Event) => {
     const value = (e.target as HTMLInputElement).value;
     SearchCollectionService.inputValue.set(value);
-    console.log('up');
-
 }
 </script>
 
 <style scoped>
 div.search-input {
+    --var-background-color: var(--search-input-background-color, var(--md-sys-color-surface-container));
+    --var-focus-background-color: var(--search-input-focus-background-color, var(--md-sys-color-surface-container));
+
+    transition-property: background-color, color;
+    transition-duration: 200ms;
+
     border-radius: 9999px;
     height: 48px;
-    background-color: var(--md-sys-color-surface-container);
+    background-color: var(--var-background-color);
     position: relative;
     display: grid;
     align-items: center;
@@ -53,9 +58,19 @@ div.search-input {
         -webkit-line-clamp: 1;
     }
 
+    &:hover {
+        --md-elevation-level: 1;
+    }
+
+    &:hover:active,
+    &:active {
+        --md-elevation-level: 3;
+    }
+
     &:focus,
     &:focus-within {
-        background-color: var(--md-sys-color-surface-container-high);
+        background-color: var(--var-focus-background-color);
+        --md-elevation-level: 2;
     }
 }
 </style>

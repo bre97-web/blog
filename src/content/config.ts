@@ -49,3 +49,18 @@ const post = defineCollection({
 export const collections = {
     'blogs': post,
 }
+
+export type TBlog = {
+    body: string
+    collection: string
+    data: {
+        collection: string
+        creationTime: Date
+        description: string
+        heroImage: string
+        pubDate: Date
+        title: string
+    }
+    id: string
+    slug: string
+}

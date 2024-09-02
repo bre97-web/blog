@@ -30,7 +30,7 @@
         "vue": "^3.4.38"
     },
     "devDependencies": {
-        "@glare-labs/tailwindcss-material-tokens": "^0.2.0",
+        "@glare-labs/tailwindcss-material-tokens": "^0.2.1",
         "@types/node": "22.5.0",
         "autoprefixer": "^10.4.20",
         "firebase": "^10.13.0",

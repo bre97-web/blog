@@ -1,6 +1,6 @@
 import { provideAll } from '@glare-labs/tailwindcss-material-tokens'
 
-const all = provideAll()
+const all = provideAll({})
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -16,6 +16,6 @@ export default {
         lineHeight: false,
     },
     plugins: [
-        ...all.allPlugins(),
+        ...all.getAllPlugins(),
     ],
 }

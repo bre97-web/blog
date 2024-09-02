@@ -1,8 +1,6 @@
 import { atom } from "nanostores";
 import type { TBlog } from "src/content/config";
 
-const RegexSpecialSymbols = "[$&+,:;=?@#|'<>.^*()%!-]"
-
 export class SearchCollectionService {
     public static readonly inputValue = atom('')
 

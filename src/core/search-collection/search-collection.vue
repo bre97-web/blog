@@ -1,13 +1,13 @@
 <template>
     <div
         class="search-collection"
-        :class="{ 'open': showResultPanel }"
+        :class="{ 'open': searchCollectionOpen }"
     >
         <SearchInput></SearchInput>
 
-        <template v-if="showResultPanel">
+        <template v-if="inputValueStore.length !== 0">
             <SearchResult
-                v-if="hasResult"
+                v-if="res !== null && res.length !== 0"
                 :collection="res"
                 @blogClick="onBlogClick($event)"
             ></SearchResult>
@@ -36,10 +36,7 @@ const props = defineProps<{
     baseUrl: string
 }>()
 
-/**
- * 首次進入不顯示搜索結果面板
- */
-const showResultPanel = ref(false)
+const searchCollectionOpen = computed<boolean>(() => inputValueStore.value.length !== 0 && res.value !== null)
 
 /**
  * The value of Search-Input component's
@@ -47,7 +44,6 @@ const showResultPanel = ref(false)
 const inputValueStore = useStore(SearchCollectionService.inputValue)
 
 const res = ref<null | Array<TBlog>>(null)
-const hasResult = computed(() => res.value !== null && res.value.length !== 0)
 
 watch(() => inputValueStore.value, (value) => {
     if (value !== '' || value.length !== 0 || value !== null) {
@@ -58,7 +54,6 @@ watch(() => inputValueStore.value, (value) => {
             ...SearchCollectionService.findPostByTitle(value, props.collection),
             ...SearchCollectionService.findPostByDescription(value, props.collection),
         ]).values()]
-        showResultPanel.value = true
     } else {
         res.value = null
     }

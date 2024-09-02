@@ -18,4 +18,47 @@ import "../styles/tailwind.css";
         import "@material/web/labs/navigationbar/navigation-bar";
         import "@material/web/labs/navigationtab/navigation-tab";
     </script>
+
+    <script>
+        const width = window.innerWidth;
+
+        const createAlert = () => {
+            const body = document.body;
+            const dialog = document.createElement("md-dialog");
+
+            const dialogHeadline = document.createElement("span");
+            dialogHeadline.setAttribute("slot", "headline");
+            dialogHeadline.textContent = "Too small resolution";
+
+            const dialogContent = document.createElement("div");
+            dialogContent.setAttribute("slot", "content");
+            dialogContent.textContent =
+                "Too low a resolution will result in missing images, please use a device with a higher resolution.";
+
+            const dialogAction = document.createElement("div");
+            dialogAction.setAttribute("slot", "actions");
+            const dialogActionButton = document.createElement("md-text-button");
+            dialogActionButton.textContent = "OK";
+            const onButtonClick = () => {
+                dialog.open = false;
+                dialogActionButton.removeEventListener("click", onButtonClick);
+            };
+            dialogActionButton.addEventListener("click", onButtonClick);
+
+            dialog.appendChild(dialogHeadline);
+            dialog.appendChild(dialogContent);
+            dialogAction.appendChild(dialogActionButton);
+            dialog.appendChild(dialogAction);
+            body.appendChild(dialog);
+
+            dialog.open = true;
+            dialog.style.setProperty("min-width", "unset");
+        };
+
+        console.log(width);
+
+        if (width <= 300) {
+            createAlert();
+        }
+    </script>
 </html>

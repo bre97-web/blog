@@ -244,6 +244,7 @@ const { title, description, creationTime, tags, body } = Astro.props;
 
         & > .content {
             min-height: calc(100svh - var(--header-height));
+            overflow-x: hidden;
         }
         & > .sidenav {
             min-height: calc(
@@ -336,6 +337,7 @@ const { title, description, creationTime, tags, body } = Astro.props;
     body {
         transition-property: background-color;
         transition-duration: 200ms;
+        overflow-x: hidden;
     }
     .prose {
         color: var(--md-sys-color-on-surface);
@@ -378,7 +380,7 @@ const { title, description, creationTime, tags, body } = Astro.props;
         }
 
         & pre {
-            @apply border rounded-[18px] p-4 overflow-auto mt-[16px] mb-[24px];
+            @apply border rounded-[18px] p-4 max-w-full overflow-auto mt-[16px] mb-[24px];
         }
 
         & table {

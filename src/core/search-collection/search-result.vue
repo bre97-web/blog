@@ -36,12 +36,20 @@ ul.result-list {
     grid-template-columns: 1fr;
     gap: 16px;
 
-    @media (min-width: 600px) {
+    @media (min-width: 600px) and (max-width: 840px) {
         grid-template-columns: 1fr 1fr;
     }
 
-    @media (min-width: 840px) {
+    @media (min-width: 840px) and (max-width: 1200px) {
         grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    @media (min-width: 1200px) and (max-width: 1600px) {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    @media (min-width: 1600px) {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     }
 
     &>.blog {

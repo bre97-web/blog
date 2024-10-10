@@ -1,1 +1,0 @@
-import{s as a,m as c,q as n}from"./runtime-core.esm-bundler.FKCavd2i.js";function p(e){let s=a(),t=e.subscribe(o=>{s.value=o});return c()&&n(t),s}const l=(e,s)=>{const t=e.__vccOpts||e;for(const[o,r]of s)t[o]=r;return t};export{l as _,p as u};

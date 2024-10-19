@@ -6,14 +6,30 @@ import HctPicker from "../core/theme-provider/HctPicker.vue";
 import SwitchThemeIconButton from "../core/theme-provider/switch-theme-icon-button.astro";
 import Catalog from "../core/catalog/catalog.astro";
 
-const { title, description, creationTime, tags, body } = Astro.props;
+interface Props {
+    headline: string;
+    description: string;
+    collection: string;
+    tags: Array<string>;
+    creationTime: Date;
+    markdownString: string;
+}
+
+const { headline, description, creationTime, tags, markdownString } =
+    Astro.props;
 ---
 
 <div class="blog-preview at-top">
     <span class="header">
         <Header>
-            <h1 class="header-title line-clamp-1">{title}</h1>
-            <md-icon-button slot="start" class="back-to-all-post-page-button">
+            <h1 class="header-title line-clamp-1">{headline}</h1>
+            <md-icon-button
+                slot="start"
+                class="back-to-all-post-page-button"
+                type="link"
+                href="/blog"
+                data-astro-reload
+            >
                 <md-icon>arrow_back</md-icon>
             </md-icon-button>
             <md-icon-button slot="actions" toggle class="open-sidenav-button">
@@ -26,7 +42,7 @@ const { title, description, creationTime, tags, body } = Astro.props;
     </span>
 
     <article class="content">
-        <h1 class="article-title text-display-large">{title}</h1>
+        <h1 class="article-title text-display-large">{headline}</h1>
         <p class="article-description text-title-medium">{description}</p>
         <ul class="article-tags text-label-small">
             {tags?.map((tag) => <li class="tag">{tag}</li>)}
@@ -62,7 +78,7 @@ const { title, description, creationTime, tags, body } = Astro.props;
 
     <nav class="sidenav">
         <md-elevation></md-elevation>
-        <Catalog markdownRaw={body} />
+        <Catalog markdownRaw={markdownString} />
     </nav>
 
     <span class="footer">
@@ -72,8 +88,6 @@ const { title, description, creationTime, tags, body } = Astro.props;
 
 <script>
     import { MdIconButton } from "@material/web/all";
-    import { navigate } from "astro:transitions/client";
-    import { NavigationService } from "../core/navigation/navigation.service";
 
     const root = document.querySelector(".blog-preview")!;
     const header = document.querySelector(".blog-preview>.header")!;
@@ -83,11 +97,11 @@ const { title, description, creationTime, tags, body } = Astro.props;
     )! as MdIconButton;
     const backButton = document.querySelector(".back-to-all-post-page-button")!;
 
-    const onBackToPostsPageButtonClick = () => {
-        navigate(
-            NavigationService.getLinks().find((e) => e.label === "Posts")!.url,
-        );
-    };
+    //const onBackToPostsPageButtonClick = () => {
+    //    navigate(
+    // NavigationService.getLinks().find((e) => e.label === "Posts")!.url,
+    // );
+    // };
     const onWindowScroll = () => {
         const { top, height } = articleTitle.getBoundingClientRect();
 
@@ -109,7 +123,7 @@ const { title, description, creationTime, tags, body } = Astro.props;
     window.addEventListener("load", () => {
         onWindowScroll();
 
-        backButton.addEventListener("click", onBackToPostsPageButtonClick);
+        // backButton.addEventListener("click", onBackToPostsPageButtonClick);
         window.addEventListener("scroll", onWindowScroll);
         openSidenavButton.addEventListener("click", onOpenSidenavButtonClick);
     });

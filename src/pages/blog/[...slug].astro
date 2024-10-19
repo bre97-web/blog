@@ -2,7 +2,7 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import BaseHead from "../../core/head/base-head.astro";
 import ThemeProvider from "../../core/theme-provider/theme-provider.astro";
-import ProductBlogPreview from "../../layouts/product-blog-preview.astro";
+import ProductBlog from "../../layouts/product-blog.layout.astro";
 import ProductHtml from "../../layouts/product-html.layout.astro";
 
 export async function getStaticPaths() {
@@ -10,7 +10,7 @@ export async function getStaticPaths() {
      * Please complete the code here.
      * Please confirm that there is an mdx file in the src/content/blogs/* folder.
      *
-     * This project provides `blogs` folder by default.
+     * This project provides `blog` folder by default.
      */
     const posts = await getCollection("blogs");
 
@@ -23,21 +23,30 @@ export async function getStaticPaths() {
             slug: post.slug,
         },
         props: {
-            ...post,
+            blog: post,
         },
     }));
 }
-type Props = CollectionEntry<"post">;
+interface Props {
+    blog: CollectionEntry<"blogs">;
+}
 
-const post = Astro.props;
-const { Content } = await post.render();
+const { blog } = Astro.props;
+const { Content } = await blog.render();
 ---
 
 <ProductHtml>
     <BaseHead slot="head" />
     <ThemeProvider>
-        <ProductBlogPreview {...post.data} body={post.body}>
+        <ProductBlog
+            markdownString={blog.body}
+            collection={blog.data.collection}
+            creationTime={blog.data.creationTime}
+            description={blog.data.description}
+            headline={blog.data.headline}
+            tags={blog.data.tags}
+        >
             <Content />
-        </ProductBlogPreview>
+        </ProductBlog>
     </ThemeProvider>
 </ProductHtml>

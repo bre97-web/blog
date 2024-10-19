@@ -10,6 +10,10 @@
         /* For testing */
         /* @apply border border-black; */
     }
+
+    body {
+        font-family: "Jetbrains mono", "Roboto", "Noto sans sc", "Noto sans";
+    }
 }
 
 @layer material-design-scroll-bar {

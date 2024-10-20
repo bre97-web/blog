@@ -8,6 +8,7 @@ import { NavigationService } from "./navigation.service";
             <span class="navigation-rail-tab" data-href={link.url}>
                 <span class="indicator">
                     <md-icon class="icon">{link.iconString}</md-icon>
+                    <md-ripple class="ripple" />
                 </span>
                 <span class="label md-typescale-label-medium">
                     {link.label}
@@ -18,13 +19,20 @@ import { NavigationService } from "./navigation.service";
 </div>
 
 <script>
+    import { MdRipple } from "@material/web/ripple/ripple";
     import { navigate } from "astro:transitions/client";
     import { NavigationService } from "./navigation.service";
 
     const rail = document.querySelector(".navigation-rail")! as HTMLElement;
-    const items = [...rail.children];
+    const items = Array.from(
+        rail.querySelectorAll(
+            "&>.navigation-rail-tab",
+        ) as NodeListOf<HTMLElement>,
+    );
 
-    window.addEventListener("load", (_) => {
+    document.addEventListener("astro:page-load", (_) => {
+        console.log("load");
+
         /**
          * @event click 為navigation-rail中的navigation-rail-tab設置頁面導行, 同時激活對應的navigation-rail-tab
          */
@@ -49,7 +57,11 @@ import { NavigationService } from "./navigation.service";
         /**
          * @event load 初始化navigation-rail默認激活的navigation-rail-tab
          */
-        if (items.findIndex((tab) => tab.classList.contains("active")) === -1) {
+        if (
+            items.findIndex((tab: HTMLElement) =>
+                tab.classList.contains("active"),
+            ) === -1
+        ) {
             const url = new URL(window.location.href);
             items.forEach((tab) => {
                 if (tab.getAttribute("data-href")! === url.pathname) {
@@ -69,6 +81,11 @@ import { NavigationService } from "./navigation.service";
                     tab.classList.add("active");
                 }
             });
+        });
+
+        items.map((item: Element) => {
+            const ripple = item.querySelector("&>.indicator>.ripple");
+            (ripple as MdRipple).attach(item as HTMLElement);
         });
     });
 </script>
@@ -142,9 +159,6 @@ import { NavigationService } from "./navigation.service";
                 display: block;
                 text-align: center;
                 color: var(--md-sys-color-on-surface);
-            }
-            &:hover > .indicator::after {
-                background-color: var(--md-sys-color-surface-variant);
             }
 
             &.active {

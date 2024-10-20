@@ -13,13 +13,13 @@ export class NavigationService {
             index: 0,
             label: 'Home',
             iconString: 'home',
-            url: `${import.meta.env.BASE_URL}`,
+            url: `/`,
         },
         {
             index: 1,
-            label: 'Posts',
+            label: 'Blog',
             iconString: 'book',
-            url: `${import.meta.env.BASE_URL}all-posts/`,
+            url: `/blog`,
         },
     ]
 

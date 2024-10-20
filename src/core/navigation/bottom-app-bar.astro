@@ -26,6 +26,7 @@ import { NavigationService } from "./navigation.service";
 </md-navigation-bar>
 
 <script>
+    import type { MdRipple } from "@material/web/all";
     import type { MdNavigationBar } from "@material/web/labs/navigationbar/navigation-bar";
     import { navigate } from "astro:transitions/client";
     import { NavigationService } from "./navigation.service";
@@ -44,9 +45,24 @@ import { NavigationService } from "./navigation.service";
             });
         }
     };
+    const initRipple = () => {
+        const ripplHosts = bar.querySelectorAll(".bottom-app-tab")!;
+
+        ripplHosts.forEach((host) => {
+            const ripple = host.shadowRoot!.querySelector(
+                ".md3-navigation-tab__ripple",
+            ) as MdRipple;
+            // ripple.classList.add("unbounded-ripple");
+            ripple.style.setProperty("inset", "unset");
+            ripple.style.setProperty("border-radius", "9999px");
+            ripple.style.setProperty("height", "128px");
+            ripple.style.setProperty("width", "128px");
+            ripple.attach(host as HTMLElement);
+        });
+    };
     const createTabNavigateEvent = () => {
         bar.tabs.forEach((tab) => {
-            tab.addEventListener("click", (e) => {
+            tab.addEventListener("click", (_) => {
                 navigate(tab.getAttribute("data-href")!);
                 NavigationService.url.set(tab.getAttribute("data-href")!);
             });
@@ -55,6 +71,7 @@ import { NavigationService } from "./navigation.service";
 
     window.addEventListener("load", () => {
         initTabs();
+        initRipple();
         createTabNavigateEvent();
         NavigationService.url.subscribe((value) => {
             bar.tabs.forEach((tab) => {
@@ -69,8 +86,9 @@ import { NavigationService } from "./navigation.service";
 <style is:global>
     .bottom-app-bar {
         --md-navigation-bar-container-elevation: 0;
-        & .inactive-icon {
-        }
+
+        overflow: hidden;
+
         & .active-icon {
             font-variation-settings:
                 "FILL" 1,

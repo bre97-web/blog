@@ -5,15 +5,14 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-    * {
-        /* For testing */
-        /* @apply border border-black; */
-    }
+body {
+    padding: 0;
+    margin: 0;
 
-    body {
-        font-family: "Jetbrains mono", "Roboto", "Noto sans sc", "Noto sans";
-    }
+    font-family: "Jetbrains mono", "Roboto", "Noto sans sc", "Noto sans";
+
+    --md-ref-typeface-brand: "Jetbrains mono", "Roboto", "Noto sans sc", "Noto sans";
+    --md-ref-typeface-plain: "Jetbrains mono", "Roboto", "Noto sans sc", "Noto sans";
 }
 
 @layer material-design-scroll-bar {

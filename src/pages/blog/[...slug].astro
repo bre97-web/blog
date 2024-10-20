@@ -1,7 +1,6 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import BaseHead from "../../core/head/base-head.astro";
-import ThemeProvider from "../../core/theme-provider/theme-provider.astro";
 import ProductBlog from "../../layouts/product-blog.layout.astro";
 import ProductHtml from "../../layouts/product-html.layout.astro";
 
@@ -37,16 +36,14 @@ const { Content } = await blog.render();
 
 <ProductHtml>
     <BaseHead slot="head" />
-    <ThemeProvider>
-        <ProductBlog
-            markdownString={blog.body}
-            collection={blog.data.collection}
-            creationTime={blog.data.creationTime}
-            description={blog.data.description}
-            headline={blog.data.headline}
-            tags={blog.data.tags}
-        >
-            <Content />
-        </ProductBlog>
-    </ThemeProvider>
+    <ProductBlog
+        markdownString={blog.body}
+        collection={blog.data.collection}
+        creationTime={blog.data.creationTime}
+        description={blog.data.description}
+        headline={blog.data.headline}
+        tags={blog.data.tags}
+    >
+        <Content />
+    </ProductBlog>
 </ProductHtml>

@@ -1,4 +1,10 @@
 ---
+/**
+ * root page
+ * @url /
+ */
+
+import { getCollection } from "astro:content";
 import { ViewTransitions } from "astro:transitions";
 import Footer from "../core/footer/footer.astro";
 import BaseHead from "../core/head/base-head.astro";
@@ -9,143 +15,121 @@ import BottomAppBar from "../core/navigation/bottom-app-bar.astro";
 import NavigationRail from "../core/navigation/navigation-rail.astro";
 import HctPicker from "../core/theme-provider/HctPicker.vue";
 import SwitchThemeIconButton from "../core/theme-provider/switch-theme-icon-button.astro";
-import ThemeProvider from "../core/theme-provider/theme-provider.astro";
 import ProductHtml from "../layouts/product-html.layout.astro";
 import ProductPage from "../layouts/product-page.layout.astro";
+
+const hero = {
+    headline: "HEADLINE",
+    description: "DESCRIPTION",
+};
+
+const socialLinks = [
+    {
+        label: "Github",
+        url: "https://github.com/bre97-web",
+        svg: `
+            <svg
+                class="logo"
+                width="40"
+                height="40"
+                viewBox="0 0 24 24"
+                aria-label="Github icon"
+                aria-hidden="true"
+            >
+                <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm2.218 18.616c-.354.069-.468-.149-.468-.336v-1.921c0-.653-.229-1.079-.481-1.296 1.56-.173 3.198-.765 3.198-3.454 0-.765-.273-1.389-.721-1.879.072-.177.312-.889-.069-1.853 0 0-.587-.188-1.923.717-.561-.154-1.159-.231-1.754-.234-.595.003-1.193.08-1.753.235-1.337-.905-1.925-.717-1.925-.717-.379.964-.14 1.676-.067 1.852-.448.49-.722 1.114-.722 1.879 0 2.682 1.634 3.282 3.189 3.459-.2.175-.381.483-.444.936-.4.179-1.413.488-2.037-.582 0 0-.37-.672-1.073-.722 0 0-.683-.009-.048.426 0 0 .46.215.777 1.024 0 0 .405 1.25 2.353.826v1.303c0 .185-.113.402-.462.337-2.782-.925-4.788-3.549-4.788-6.641 0-3.867 3.135-7 7-7s7 3.133 7 7c0 3.091-2.003 5.715-4.782 6.641z"></path>
+            </svg>
+        `,
+    },
+];
+
+const latestBlogs = (await getCollection("blogs"))
+    .sort(
+        (e) =>
+            e.data.creationTime.getMilliseconds() -
+            e.data.creationTime.getMilliseconds(),
+    )
+    .splice(3);
 ---
 
 <ProductHtml>
     <BaseHead slot="head" />
     <ViewTransitions slot="head" />
-    <ThemeProvider>
-        <ProductPage>
-            <BottomAppBar slot="bottom-app-bar" />
-            <NavigationRail slot="navigation-rail" />
-            <div class="sticky-header">
-                <Header>
-                    <HeaderTitle />
-                    <SwitchThemeIconButton slot="actions" />
-                    <HctPicker client:only="vue" slot="actions" />
-                </Header>
-                <HeaderDrop />
-            </div>
+    <ProductPage>
+        <BottomAppBar slot="bottom-app-bar" />
+        <NavigationRail slot="navigation-rail" />
+        <div class="sticky-header">
+            <Header>
+                <HeaderTitle />
+                <SwitchThemeIconButton slot="actions" />
+                <HctPicker client:only="vue" slot="actions" />
+            </Header>
+            <HeaderDrop />
+        </div>
 
-            <div class="page-content">
-                <div class="hero">
-                    <h1 class="hero-title text-display-large">
-                        Bre97-web's blog
+        <div class="page-content">
+            <div class="hero-wrapper">
+                <section class="hero-content">
+                    <h1 class="hero-headline text-display-large">
+                        {hero.headline}
                     </h1>
-                    <div class="hero-background">
-                        <img
-                            class="hero-img"
-                            aria-hidden="true"
-                            loading="eager"
-                            fetchpriority="high"
-                            src="https://www.gstatic.com/images/icons/material/apps/fonts/1x/catalog/v5/heroes/noto-bg-light.jpg"
-                            srcset="https://www.gstatic.com/images/icons/material/apps/fonts/1x/catalog/v5/heroes/noto-bg-light.jpg=w1860 1x, https://www.gstatic.com/images/icons/material/apps/fonts/1x/catalog/v5/heroes/noto-bg-light.jpg=w3720 2x"
-                        />
-                    </div>
+                    <p class="hero-description text-body-large">
+                        {hero.description}
+                    </p>
+                </section>
+                <div class="hero-logo hero-logo-wrapper">
+                    <span class="round-outer"></span>
+                    <span class="round-mask"></span>
+                    <span class="round-inner"></span>
+                    <h1 class="label">B</h1>
                 </div>
-
-                <div class="standalone-card">
-                    <h1 class="title text-headline-medium">Follow me</h1>
-                    <div class="about-me-links">
-                        <!-- Github -->
-                        <div class="card">
-                            <h1 class="title text-title-medium">
-                                GitHub Profile
-                            </h1>
-                            <p class="description text-body-medium">
-                                Includes all my coding activities.
-                            </p>
-                            <md-outlined-icon-button
-                                href="https://github.com/bre97-web"
-                                target="blank"
-                                class="side-icon"
-                            >
-                                <md-icon>open_in_new</md-icon>
-                            </md-outlined-icon-button>
-                            <svg
-                                class="logo"
-                                width="40"
-                                height="40"
-                                viewBox="0 0 24 24"
-                                aria-label="Github icon"
-                                aria-hidden="true"
-                            >
-                                <path
-                                    d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm2.218 18.616c-.354.069-.468-.149-.468-.336v-1.921c0-.653-.229-1.079-.481-1.296 1.56-.173 3.198-.765 3.198-3.454 0-.765-.273-1.389-.721-1.879.072-.177.312-.889-.069-1.853 0 0-.587-.188-1.923.717-.561-.154-1.159-.231-1.754-.234-.595.003-1.193.08-1.753.235-1.337-.905-1.925-.717-1.925-.717-.379.964-.14 1.676-.067 1.852-.448.49-.722 1.114-.722 1.879 0 2.682 1.634 3.282 3.189 3.459-.2.175-.381.483-.444.936-.4.179-1.413.488-2.037-.582 0 0-.37-.672-1.073-.722 0 0-.683-.009-.048.426 0 0 .46.215.777 1.024 0 0 .405 1.25 2.353.826v1.303c0 .185-.113.402-.462.337-2.782-.925-4.788-3.549-4.788-6.641 0-3.867 3.135-7 7-7s7 3.133 7 7c0 3.091-2.003 5.715-4.782 6.641z"
-                                ></path>
-                            </svg>
-                        </div>
-
-                        <!-- Facebook -->
-                        <div class="card">
-                            <h1 class="title text-title-medium">
-                                Facebook Profile
-                            </h1>
-                            <p class="description text-body-medium">
-                                Rarely used.
-                            </p>
-                            <md-outlined-icon-button
-                                href="https://www.facebook.com/profile.php?id=100079648962937&mibextid=ZbWKwL"
-                                target="blank"
-                                class="side-icon"
-                            >
-                                <md-icon>open_in_new</md-icon>
-                            </md-outlined-icon-button>
-                            <svg
-                                class="logo"
-                                width="40"
-                                height="40"
-                                viewBox="0 0 24 24"
-                                aria-label="Facebook icon"
-                                aria-hidden="true"
-                            >
-                                <path
-                                    d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3 8h-1.35c-.538 0-.65.221-.65.778v1.222h2l-.209 2h-1.791v7h-3v-7h-2v-2h2v-2.308c0-1.769.931-2.692 3.029-2.692h1.971v3z"
-                                ></path>
-                            </svg>
-                        </div>
-
-                        <!-- Twitter / X -->
-                        <div class="card">
-                            <h1 class="title text-title-medium">
-                                Twitter Profile
-                            </h1>
-                            <p class="description text-body-medium">
-                                Daily use.
-                            </p>
-                            <md-outlined-icon-button
-                                href="https://x.com/bre97_community"
-                                target="blank"
-                                class="side-icon"
-                            >
-                                <md-icon>open_in_new</md-icon>
-                            </md-outlined-icon-button>
-                            <svg
-                                class="logo"
-                                width="40"
-                                height="40"
-                                viewBox="0 0 24 24"
-                                aria-label="Twitter icon"
-                                aria-hidden="true"
-                            >
-                                <path
-                                    d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.066 9.645c.183 4.04-2.83 8.544-8.164 8.544-1.622 0-3.131-.476-4.402-1.291 1.524.18 3.045-.244 4.252-1.189-1.256-.023-2.317-.854-2.684-1.995.451.086.895.061 1.298-.049-1.381-.278-2.335-1.522-2.304-2.853.388.215.83.344 1.301.359-1.279-.855-1.641-2.544-.889-3.835 1.416 1.738 3.533 2.881 5.92 3.001-.419-1.796.944-3.527 2.799-3.527.825 0 1.572.349 2.096.907.654-.128 1.27-.368 1.824-.697-.215.671-.67 1.233-1.263 1.589.581-.07 1.135-.224 1.649-.453-.384.578-.87 1.084-1.433 1.489z"
-                                ></path>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- <div class="standalone-card">
-                    <h1 class="title text-headline-medium">Subscribe RSS</h1>
-                </div> -->
-                <Footer />
             </div>
-        </ProductPage>
-    </ThemeProvider>
+
+            <div class="the-latest-blogs">
+                <h1 class="headline text-headline-medium">The Latest Blogs</h1>
+
+                {
+                    latestBlogs.map((blog) => (
+                        <a
+                            class="blog"
+                            href={`/blog/${blog.slug}`}
+                            target="_blank"
+                        >
+                            <h1 class="headline text-title-medium">
+                                {blog.data.headline}
+                            </h1>
+                            <p class="description text-body-medium">
+                                {blog.data.description}
+                            </p>
+                            <md-ripple />
+                        </a>
+                    ))
+                }
+            </div>
+
+            <div class="hero-social-link-list">
+                <h1 class="headline text-headline-medium">Activities</h1>
+
+                {
+                    socialLinks.map((link) => (
+                        <a
+                            class="social-link-list-item"
+                            href={link.url}
+                            target="_blank"
+                        >
+                            <span class="icon" set:html={link.svg} />
+                            <span class="label text-body-medium">
+                                {link.label}
+                            </span>
+                            <md-icon class="alt-icon">open_in_new</md-icon>
+                            <md-ripple />
+                        </a>
+                    ))
+                }
+            </div>
+
+            <Footer />
+        </div>
+    </ProductPage>
 </ProductHtml>
 
 <style>
@@ -189,107 +173,487 @@ import ProductPage from "../layouts/product-page.layout.astro";
             margin-bottom: calc(32px * var(--space-y-reverse));
         }
     }
-    .hero {
-        height: 240px;
-        background-color: var(--md-sys-color-primary-container);
-        padding: 28px;
+</style>
+
+<!-- Hero & Logo -->
+<style>
+    .hero-wrapper {
         border-radius: 28px;
+        padding: 12px;
         position: relative;
         overflow: hidden;
         z-index: 0;
+        background-color: var(--md-sys-color-surface-container-lowest);
+        display: grid;
+        align-items: center;
+        justify-content: center;
+        gap: 32px;
 
-        & > .hero-title {
-            color: var(--md-sys-color-on-primary-fixed);
-            z-index: 1;
+        @media (max-width: 840px) {
+            grid-template-rows: auto 1fr auto;
+            grid-template-columns: 1fr;
+
+            & > .hero-content {
+                grid-row: 2/3;
+                grid-column: 1/2;
+            }
+            & > .hero-logo {
+                grid-row: 1/2;
+                grid-column: 1/2;
+            }
+            & > .hero-social-link-list {
+                grid-row: 3/4;
+                grid-column: 1/2;
+                display: grid;
+                grid-auto-rows: auto;
+            }
         }
-        & > .hero-background {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: -1;
-            box-align: center;
-            height: 100%;
-            width: 100%;
 
-            & > .hero-img {
-                height: 100%;
+        @media (min-width: 840px) {
+            grid-template-rows: 1fr;
+            grid-template-columns: auto 1fr auto;
+
+            & > .hero-content {
+                grid-row: 1/2;
+                grid-column: 2/3;
+            }
+            & > .hero-logo {
+                grid-row: 1/2;
+                grid-column: 1/2;
+            }
+            & > .hero-social-link-list {
+                grid-row: 1/2;
+                grid-column: 3/4;
+                display: grid;
+                grid-template-rows: repeat(3, 1fr);
+            }
+        }
+
+        & > .hero-logo {
+            min-height: 256px;
+            place-self: center;
+            position: relative;
+
+            @media (max-width: 840px) {
                 width: 100%;
-                object-fit: cover;
+            }
+            @media (min-width: 840px) {
+                width: 256px;
+            }
+
+            &::before {
+                content: "";
+                z-index: -1;
+                border-radius: 16px;
+                background-color: var(--md-sys-color-surface);
+                @media (max-width: 420px) {
+                    background-color: transparent;
+                }
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        & > .hero-content {
+            padding: 12px;
+            display: grid;
+            grid-template-rows: 1fr auto;
+            grid-template-columns: 1fr;
+            text-align: start;
+            align-self: start;
+            & > .hero-headline {
+                color: var(--md-sys-color-primary);
+            }
+            & > .hero-description {
+                color: var(--md-sys-color-primary);
             }
         }
     }
+    .hero-logo {
+        --size-unit: 16px;
 
-    .standalone-card {
-        border-radius: 28px;
-        background-color: var(--md-sys-color-surface-container);
-        padding: 16px;
+        --outer-size: calc(var(--size-unit) * 6);
+        --mask-size: calc(var(--size-unit) * 5);
+        --inner-size: calc(var(--size-unit) * 4);
 
-        & > .title {
-            margin-bottom: 16px;
-            color: var(--md-sys-color-on-surface);
+        position: relative;
+        width: var(--outer-size);
+        height: var(--outer-size);
+        overflow: hidden;
+        z-index: 1;
+        display: flex;
+
+        &::after,
+        & > :is(.round-inner, .round-mask, .round-outer, .label) {
+            transition-property: scale, opacity;
+            transition-duration: 200ms;
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            height: calc(var(--size-unit) * 8);
+            width: calc(var(--size-unit) * 8);
+            background-color: var(--md-sys-color-primary-container);
+            place-self: center;
+            border-radius: 9999px;
+            filter: blur(32px);
+            animation-name: logo-after-animation;
+            animation-iteration-count: infinite;
+            animation-duration: 5000ms;
+            scale: 0;
+        }
+
+        & > .label {
+            position: absolute;
+            inset: 0;
+            display: block;
+            z-index: 3;
+            place-self: center;
+            color: var(--md-sys-color-on-primary);
+            animation-name: label-animation;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        & > :is(.round-inner, .round-mask, .round-outer, .label) {
+            display: block;
+            border-radius: 9999px;
+            position: absolute;
+            inset: 0;
+            place-self: center;
+            animation-iteration-count: infinite;
+            animation-duration: 5000ms;
+        }
+
+        & > .round-inner {
+            width: var(--inner-size);
+            height: var(--inner-size);
+            background-color: var(--md-sys-color-primary);
+            z-index: 2;
+            animation-name: round-inner-animation;
+        }
+        & > .round-mask {
+            width: var(--mask-size);
+            height: var(--mask-size);
+            background-color: var(--md-sys-color-surface);
+            z-index: 1;
+            animation-name: round-mask-animation;
+            scale: 0;
+        }
+        & > .round-outer {
+            width: var(--outer-size);
+            height: var(--outer-size);
+            z-index: 0;
+            background-color: var(--md-sys-color-primary);
+            animation-name: round-outer-animation;
+            scale: 0.75;
         }
     }
 
-    /* Three cards in one grid */
-    .about-me-links {
-        --card-height: 100%;
-        --card-width: 100%;
-
-        display: grid;
-        gap: 16px;
-        @media (max-width: 1200px) {
-            grid-template-columns: 1fr;
-            grid-template-rows: repeat(3, 1fr);
+    @keyframes round-inner-animation {
+        0% {
+            scale: 0;
         }
-        @media (min-width: 1200px) {
-            grid-template-columns: repeat(3, 1fr);
+        15% {
+            scale: 0;
+        }
+        20% {
+            scale: 1;
+        }
+        25% {
+            scale: 1.25;
+        }
+        30% {
+            scale: 1;
+        }
+        35% {
+            scale: 1.25;
+        }
+        40% {
+            scale: 1;
+        }
+        45% {
+            scale: 1;
+        }
+        50% {
+            scale: 1.25;
+        }
+        55% {
+            scale: 1;
+        }
+        60% {
+            scale: 1.25;
+        }
+        65% {
+            scale: 1;
+        }
+        70% {
+            scale: 1;
+        }
+        75% {
+            scale: 0;
+        }
+        100% {
+            scale: 0;
+        }
+    }
+    @keyframes round-mask-animation {
+        0% {
+            scale: 0;
+        }
+        17% {
+            scale: 1;
+        }
+        27% {
+            scale: 1.05;
+        }
+        32% {
+            scale: 1;
+        }
+        37% {
+            scale: 1.05;
+        }
+        42% {
+            scale: 1;
+        }
+        47% {
+            scale: 1;
+        }
+        52% {
+            scale: 1.05;
+        }
+        57% {
+            scale: 1;
+        }
+        62% {
+            scale: 1.05;
+        }
+        67% {
+            scale: 1;
+        }
+        72% {
+            scale: 1;
+        }
+        77% {
+            scale: 0;
+        }
+        100% {
+            scale: 0;
+        }
+    }
+    @keyframes round-outer-animation {
+        0% {
+            scale: 0.75;
+        }
+        24% {
+            scale: 1;
+        }
+        29% {
+            scale: 1.1;
+        }
+        34% {
+            scale: 1;
+        }
+        39% {
+            scale: 1.1;
+        }
+        44% {
+            scale: 1;
+        }
+        49% {
+            scale: 1;
+        }
+        54% {
+            scale: 1.1;
+        }
+        59% {
+            scale: 1;
+        }
+        64% {
+            scale: 1.1;
+        }
+        69% {
+            scale: 1;
+        }
+        74% {
+            scale: 1;
+        }
+        79% {
+            scale: 0.75;
+        }
+        100% {
+            scale: 0.75;
+        }
+    }
+
+    @keyframes label-animation {
+        0% {
+            opacity: 1;
+        }
+        20% {
+            opacity: 0;
+        }
+        72% {
+            opacity: 0;
+        }
+        75% {
+            opacity: 1;
+        }
+        99% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+    @keyframes logo-after-animation {
+        0% {
+            opacity: 0.5;
+            scale: 1;
+        }
+        30% {
+            opacity: 1;
+            scale: 1;
+        }
+        75% {
+            opacity: 1;
+            scale: 1.25;
+        }
+        100% {
+            opacity: 0.5;
+            scale: 1;
+        }
+    }
+</style>
+
+<!-- Social Link List -->
+<style>
+    .hero-social-link-list {
+        position: relative;
+        border-radius: 28px;
+        padding: 12px;
+        background-color: var(--md-sys-color-surface-container-lowest);
+
+        & > .headline {
+            margin: 24px;
+            color: var(--md-sys-color-on-surface);
+        }
+
+        & > .social-link-list-item {
+            position: relative;
+            display: grid;
+            align-items: center;
+            grid-template-columns: 40px 1fr 24px;
             grid-template-rows: 1fr;
-        }
-
-        & > .card {
-            width: var(--card-width);
-            height: var(--card-height);
-            border-radius: 24px;
-            background-color: var(--md-sys-color-surface-container-lowest);
-            padding: 16px 16px;
+            min-height: 40px;
+            padding: 18px 24px;
+            border-radius: 18px;
             position: relative;
 
-            display: grid;
-            grid-template-columns: 48px 1fr 48px;
-            grid-template-rows: 24px 24px;
-            column-gap: 12px;
+            & > .label {
+                color: var(--md-sys-color-on-surface);
+                margin-left: 16px;
+            }
 
-            & > :is(.title, .description) {
+            & > :is(.icon, .alt-icon) {
+                place-self: center;
+            }
+
+            & > .icon {
+                fill: var(--md-sys-color-on-surface);
+            }
+
+            & > .alt-icon {
+                color: var(--md-sys-color-on-surface-variant);
+            }
+
+            --md-ripple-hover-color: var(--md-sys-color-primary);
+            --md-ripple-pressed-color: var(--md-sys-color-primary);
+        }
+    }
+</style>
+
+<!-- The Latest Blogs -->
+<style>
+    .the-latest-blogs {
+        display: grid;
+        overflow: hidden;
+        border-radius: 28px;
+        padding: 12px;
+        background-color: var(--md-sys-color-surface-container-lowest);
+        gap: 16px;
+
+        @media (max-width: 600px) {
+            grid-template-rows: auto repeat(3, 1fr);
+            grid-template-columns: 1fr;
+
+            & > .headline {
+                grid-row: 1/2;
+                grid-column: 1/2;
+            }
+            & > .blog {
+                grid-column: 1/2;
+            }
+        }
+
+        @media (min-width: 600px) and (max-width: 840px) {
+            grid-template-rows: auto 1fr;
+            grid-template-columns: 1fr 1fr;
+
+            & > .headline {
+                grid-row: 1/2;
+                grid-column: 1/3;
+            }
+            & > .blog {
+            }
+        }
+
+        @media (min-width: 840px) {
+            grid-template-rows: auto 1fr;
+            grid-template-columns: repeat(4, 1fr);
+
+            & > .headline {
+                grid-row: 1/2;
+                grid-column: 1/4;
+            }
+            & > .blog {
+                grid-row: 2/3;
+            }
+        }
+
+        & > .headline {
+            margin: 24px;
+            color: var(--md-sys-color-on-surface);
+        }
+
+        & > .blog {
+            position: relative;
+            border-radius: 16px;
+            border: 1px solid var(--md-sys-color-outline-variant);
+            padding: 16px;
+
+            & > .headline {
+                color: var(--md-sys-color-on-surface);
                 overflow: hidden;
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
-                -webkit-line-clamp: 1;
-            }
-            & > .title {
-                color: var(--md-sys-color-on-surface);
-                grid-column: 2/3;
-                grid-row: 1/2;
+                -webkit-line-clamp: 3;
             }
             & > .description {
                 color: var(--md-sys-color-on-surface-variant);
-                grid-column: 2/3;
-                grid-row: 2/3;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 4;
+                margin-top: 8px;
             }
-            & > .side-icon {
-                grid-column: 3/4;
-                grid-row: 1/3;
-                align-self: center;
-                justify-self: center;
-            }
-            & > .logo {
-                grid-column: 1/2;
-                grid-row: 1/3;
-                align-self: center;
-                justify-self: center;
-                fill: var(--md-sys-color-on-surface);
-            }
+
+            --md-ripple-hover-color: var(--md-sys-color-primary);
+            --md-ripple-pressed-color: var(--md-sys-color-primary);
         }
     }
 </style>

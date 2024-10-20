@@ -1,4 +1,4 @@
-import { Hct, SchemeContent, hexFromArgb } from "@material/material-color-utilities"
+import { Hct, SchemeFidelity, hexFromArgb } from "@material/material-color-utilities"
 import { persistentMap } from "@nanostores/persistent"
 import { Strings } from "../../shared/strings"
 import { MaterialColors } from './material-color'
@@ -25,8 +25,8 @@ export interface IThemeConfiguration {
 
 abstract class ACThemeConfigurationState {
     private sourceColorHctRawObject: TSourceColorHctRawObject = {
-        hue: 150,
-        chroma: 50,
+        hue: 135,
+        chroma: 75,
         tone: 50
     }
     private isDark: boolean = false
@@ -104,7 +104,7 @@ class CThemeConfigurationService extends ACPersistentThemeConfigurationState imp
         return Hct.from(this.getSourceColorHctRawObject().hue, this.getSourceColorHctRawObject().chroma, this.getSourceColorHctRawObject().tone)
     }
     public getStyleText(selector: string = ':root', tokenPrefix: string = 'md-sys-color') {
-        const scheme = new SchemeContent(this.getSourceColorHct(), this.getIsDark(), this.getContrastLevel())
+        const scheme = new SchemeFidelity(this.getSourceColorHct(), this.getIsDark(), this.getContrastLevel())
         const theme: Record<string, string> = {}
         for (const [key, value] of Object.entries(MaterialColors)) {
             theme[key] = hexFromArgb(value.getArgb(scheme))

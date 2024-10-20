@@ -16,7 +16,6 @@ import NavigationRail from "../../core/navigation/navigation-rail.astro";
 import SearchCollection from "../../core/search-collection/search-collection.vue";
 import HctPicker from "../../core/theme-provider/HctPicker.vue";
 import SwitchThemeIconButton from "../../core/theme-provider/switch-theme-icon-button.astro";
-import ThemeProvider from "../../core/theme-provider/theme-provider.astro";
 import ProductHtml from "../../layouts/product-html.layout.astro";
 import ProductPage from "../../layouts/product-page.layout.astro";
 
@@ -33,7 +32,6 @@ const tags = Array.from(
 <ProductHtml>
     <BaseHead slot="head" />
     <ViewTransitions slot="head" />
-    <ThemeProvider>
         <ProductPage>
             <BottomAppBar slot="bottom-app-bar" />
             <NavigationRail slot="navigation-rail" />
@@ -97,11 +95,10 @@ const tags = Array.from(
                 <Footer />
             </div>
         </ProductPage>
-    </ThemeProvider>
 </ProductHtml>
 
 <script>
-    import type { MdChipSet, MdFilterChip } from "@material/web/all";
+    import type { MdChipSet, MdFilterChip } from "@material/web/all"
 
     const chipset = document.querySelector(".tag-filter.chip-set") as MdChipSet;
     const chips = Array.from(
@@ -130,6 +127,13 @@ const tags = Array.from(
         const activatedChips = chips
             .filter((chip) => chip.selected)
             .map((chip) => chip.label);
+
+        if (activatedChips.length === 0) {
+            blogs.forEach((blog) => {
+                setBlogVisible(blog, true);
+            });
+            return;
+        }
 
         for (const index in blogs) {
             const blog = blogs[index];

@@ -28,7 +28,6 @@ const { headline, description, creationTime, tags, markdownString } =
                 class="back-to-all-post-page-button"
                 type="link"
                 href="/blog"
-                data-astro-reload
             >
                 <md-icon>arrow_back</md-icon>
             </md-icon-button>
@@ -95,13 +94,7 @@ const { headline, description, creationTime, tags, markdownString } =
     const openSidenavButton = document.querySelector(
         ".open-sidenav-button",
     )! as MdIconButton;
-    const backButton = document.querySelector(".back-to-all-post-page-button")!;
 
-    //const onBackToPostsPageButtonClick = () => {
-    //    navigate(
-    // NavigationService.getLinks().find((e) => e.label === "Posts")!.url,
-    // );
-    // };
     const onWindowScroll = () => {
         const { top, height } = articleTitle.getBoundingClientRect();
 
@@ -122,8 +115,6 @@ const { headline, description, creationTime, tags, markdownString } =
 
     window.addEventListener("load", () => {
         onWindowScroll();
-
-        // backButton.addEventListener("click", onBackToPostsPageButtonClick);
         window.addEventListener("scroll", onWindowScroll);
         openSidenavButton.addEventListener("click", onOpenSidenavButtonClick);
     });
@@ -151,20 +142,20 @@ const { headline, description, creationTime, tags, markdownString } =
 
         & {
             @media (max-width: 400px) {
-                --grid-side-gap-left: 8px;
-                --grid-side-gap-right: 8px;
+                --grid-side-gap-left: 16px;
+                --grid-side-gap-right: 16px;
             }
             @media (min-width: 400px) {
-                --grid-side-gap-left: 24px;
-                --grid-side-gap-right: 24px;
+                --grid-side-gap-left: 32px;
+                --grid-side-gap-right: 32px;
             }
             @media (min-width: 600px) {
                 --grid-side-gap-left: 32px;
                 --grid-side-gap-right: 32px;
             }
             @media (min-width: 840px) {
-                --grid-side-gap-left: 42px;
-                --grid-side-gap-right: 42px;
+                --grid-side-gap-left: 48px;
+                --grid-side-gap-right: 48px;
             }
             @media (min-width: 1200px) {
                 --computed: calc((100vw - 960px) / 2);
@@ -251,7 +242,7 @@ const { headline, description, creationTime, tags, markdownString } =
             & .header-title {
                 color: var(--md-sys-color-on-surface);
                 transition-property: opacity, top;
-                transition-duration: 150ms;
+                transition-duration: 200ms;
                 position: relative;
             }
         }
@@ -299,7 +290,7 @@ const { headline, description, creationTime, tags, markdownString } =
             }
             & > .header .header-title {
                 opacity: 0;
-                top: var(--header-height);
+                top: 24px;
             }
         }
         &:not(.at-top) {
@@ -318,11 +309,11 @@ const { headline, description, creationTime, tags, markdownString } =
     .content {
         & > .article-title {
             font-weight: 900;
-            margin-top: 32px;
+            margin-top: 64px;
             color: var(--md-sys-color-primary);
         }
         & > .article-description {
-            margin-top: 32px;
+            margin-top: 64px;
             color: var(--md-sys-color-on-surface-variant);
         }
         & > .article-tags {
@@ -357,6 +348,10 @@ const { headline, description, creationTime, tags, markdownString } =
         color: var(--md-sys-color-on-surface);
         margin-bottom: calc(100svh - 224px - var(--header-height));
 
+        & > h1 {
+            display: none;
+        }
+
         & :is(h1, h2, h3, h4, h5, h6) {
             @apply text-on-surface -mt-20 pt-20;
         }
@@ -374,11 +369,11 @@ const { headline, description, creationTime, tags, markdownString } =
         }
 
         & h2 {
-            @apply text-headline-medium font-bold;
+            @apply text-headline-large font-bold;
         }
 
         & h3 {
-            @apply text-headline-small font-bold;
+            @apply text-headline-medium font-bold;
         }
 
         & :is(h4, h5, h6) {
@@ -398,10 +393,16 @@ const { headline, description, creationTime, tags, markdownString } =
         }
 
         & table {
-            @apply rounded-[18px] overflow-clip outline mx-auto my-8;
+            @apply rounded-[18px] overflow-clip outline mx-auto my-8 text-body-medium;
+
+            & thead,
+            & tbody,
+            & tr {
+                overflow: auto;
+            }
 
             & :is(thead, tbody) > tr > :is(th, td) {
-                @apply px-4 py-2 min-w-16 text-start;
+                @apply px-4 py-2 min-w-16 text-start overflow-auto;
             }
 
             & :is(thead, tbody) {

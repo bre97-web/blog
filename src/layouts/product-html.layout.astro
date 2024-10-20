@@ -3,6 +3,7 @@
  * Global CSS
  */
 import "@fontsource/roboto";
+import "@fontsource/jetbrains-mono";
 import "../styles/tailwind.css";
 ---
 
@@ -49,6 +50,9 @@ import "../styles/tailwind.css";
             dialog.appendChild(dialogContent);
             dialogAction.appendChild(dialogActionButton);
             dialog.appendChild(dialogAction);
+            dialog.addEventListener("cancel", (e) => {
+                e.preventDefault();
+            });
             body.appendChild(dialog);
 
             dialog.open = true;
@@ -62,3 +66,23 @@ import "../styles/tailwind.css";
         }
     </script>
 </html>
+
+--- /** * ThemeProvider will generates the Material Design Tokens in runtime. */
+---
+
+<script>
+    import { ThemeConfigurationService } from "../core/theme-provider/theme-configuration.service";
+
+    ThemeConfigurationService.getInstance()
+        .getAtom()
+        .subscribe(() => {
+            const styleText =
+                ThemeConfigurationService.getInstance().getStyleText(":root");
+
+            const sheet = new CSSStyleSheet();
+
+            sheet.replaceSync(styleText);
+
+            document.adoptedStyleSheets = [sheet];
+        });
+</script>

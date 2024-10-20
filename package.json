@@ -4,9 +4,7 @@
     "version": "0.0.1",
     "scripts": {
         "dev": "astro --config ./astro.config.dev.mjs dev",
-        "start": "astro --config ./astro.config.dev.mjs dev",
-        "build:gh": "astro --config ./astro.config.ghpage.mjs check && astro --config ./astro.config.ghpage.mjs build",
-        "build:firebase": "astro --config ./astro.config.firebase.mjs check && astro --config ./astro.config.firebase.mjs build",
+        "build": "astro --config ./astro.config.mjs check && astro --config ./astro.config.mjs build",
         "preview": "astro preview",
         "astro": "astro",
         "hosting": "firebase deploy --only hosting",

@@ -1,15 +1,14 @@
 {
-    "hosting": {
-        "public": "dist",
-        "ignore": [
-            "firebase.json",
-            "src/**",
-            "server/**",
-            "public/**",
-            ".astro",
-            ".github",
-            ".vscode",
-            "**/node_modules/**"
-        ]
+  "hosting": {
+    "site": "bre97",
+    "public": "dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "frameworksBackend": {
+      "region": "us-central1"
     }
+  }
 }

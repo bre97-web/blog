@@ -6,9 +6,9 @@ import { defineConfig } from 'astro/config'
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://bre97-web.github.io',
-    base: '/blog',
-    trailingSlash: 'always',
+    site: 'https://bre97.web.app',
+    base: '/',
+    trailingSlash: 'ignore',
     integrations: [
         mdx(),
         sitemap(),

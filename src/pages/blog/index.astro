@@ -1,25 +1,33 @@
 ---
 /**
  * This page will show all mdx files.
+ * @url /blog
  */
 
-import { getCollection } from "astro:content"
-import { ViewTransitions } from "astro:transitions"
-import Footer from "../../core/footer/footer.astro"
-import BaseHead from "../../core/head/base-head.astro"
-import HeaderDrop from "../../core/header/header-drop.astro"
-import HeaderTitle from "../../core/header/header-title.astro"
-import Header from "../../core/header/header.astro"
-import BottomAppBar from "../../core/navigation/bottom-app-bar.astro"
-import NavigationRail from "../../core/navigation/navigation-rail.astro"
-import SearchCollection from "../../core/search-collection/search-collection.vue"
-import HctPicker from "../../core/theme-provider/HctPicker.vue"
-import SwitchThemeIconButton from "../../core/theme-provider/switch-theme-icon-button.astro"
-import ThemeProvider from "../../core/theme-provider/theme-provider.astro"
-import ProductHtml from "../../layouts/product-html.layout.astro"
-import ProductPage from "../../layouts/product-page.layout.astro"
+import { getCollection } from "astro:content";
+import { ViewTransitions } from "astro:transitions";
+import Footer from "../../core/footer/footer.astro";
+import BaseHead from "../../core/head/base-head.astro";
+import HeaderDrop from "../../core/header/header-drop.astro";
+import HeaderTitle from "../../core/header/header-title.astro";
+import Header from "../../core/header/header.astro";
+import BottomAppBar from "../../core/navigation/bottom-app-bar.astro";
+import NavigationRail from "../../core/navigation/navigation-rail.astro";
+import SearchCollection from "../../core/search-collection/search-collection.vue";
+import HctPicker from "../../core/theme-provider/HctPicker.vue";
+import SwitchThemeIconButton from "../../core/theme-provider/switch-theme-icon-button.astro";
+import ThemeProvider from "../../core/theme-provider/theme-provider.astro";
+import ProductHtml from "../../layouts/product-html.layout.astro";
+import ProductPage from "../../layouts/product-page.layout.astro";
 
 const blogs = await getCollection("blogs");
+const tags = Array.from(
+    new Set(
+        blogs
+            .map((blog) => blog.data.tags)
+            .reduce((pre, cur) => [...pre, ...cur], []),
+    ),
+);
 ---
 
 <ProductHtml>
@@ -43,6 +51,15 @@ const blogs = await getCollection("blogs");
                     baseUrl={`./blog/`}
                     client:only="vue"
                 />
+
+                <md-chip-set class="tag-filter chip-set">
+                    {
+                        tags.map((tag) => (
+                            <md-filter-chip class="filter-chip" label={tag} />
+                        ))
+                    }
+                </md-chip-set>
+
                 <div class="collection-list">
                     <ul class="blog-list">
                         {
@@ -50,6 +67,7 @@ const blogs = await getCollection("blogs");
                                 <a
                                     href={`/blog/${blog.slug}`}
                                     class="blog-list-item"
+                                    data-tags={blog.data.tags}
                                 >
                                     <section>
                                         <h1 class="headline">
@@ -81,6 +99,59 @@ const blogs = await getCollection("blogs");
         </ProductPage>
     </ThemeProvider>
 </ProductHtml>
+
+<script>
+    import type { MdChipSet, MdFilterChip } from "@material/web/all";
+
+    const chipset = document.querySelector(".tag-filter.chip-set") as MdChipSet;
+    const chips = Array.from(
+        chipset.querySelectorAll("&>.filter-chip"),
+    ) as Array<MdFilterChip>;
+
+    const blogs = Array.from(
+        document.querySelectorAll(".blog-list>.blog-list-item"),
+    ) as Array<HTMLElement>;
+
+    const setBlogVisible = (blog: HTMLElement, visible: boolean) => {
+        if (visible) {
+            blog.removeAttribute("invisible");
+        } else {
+            blog.setAttribute("invisible", "");
+        }
+    };
+
+    chipset.addEventListener("click", (e) => {
+        const isChipClick = chips.includes(e.target as unknown as any);
+
+        if (!isChipClick) {
+            return;
+        }
+
+        const activatedChips = chips
+            .filter((chip) => chip.selected)
+            .map((chip) => chip.label);
+
+        for (const index in blogs) {
+            const blog = blogs[index];
+
+            const attr = blog.getAttribute("data-tags");
+            if (attr === null) {
+                continue;
+            }
+
+            const attrArray = attr.split(",");
+            let isTarget = false;
+            for (const attrArrayItem of attrArray) {
+                if (activatedChips.includes(attrArrayItem)) {
+                    isTarget = true;
+                    break;
+                }
+            }
+
+            setBlogVisible(blog, isTarget);
+        }
+    });
+</script>
 
 <style>
     .sticky-header {
@@ -152,6 +223,7 @@ const blogs = await getCollection("blogs");
         }
     }
 </style>
+
 <style>
     .blog-list-item {
         @apply shape-medium bg-surface-container-high overflow-clip relative z-0 flex flex-col justify-between;
@@ -181,6 +253,10 @@ const blogs = await getCollection("blogs");
                 @apply text-on-surface-variant relative bg-surface rounded-md px-2 py-1 pointer-events-none text-label-small;
             }
         }
+
+        &[invisible] {
+            display: none;
+        }
     }
     .blog-list-item:hover {
         @apply shape-extra;
@@ -189,5 +265,11 @@ const blogs = await getCollection("blogs");
     .blog-list-item:hover:active,
     .blog-list-item:focus,
     .blog-list-item:focus-within {
+    }
+</style>
+
+<!-- Tags Chip Set -->
+<style>
+    .tag-filter.chip-set {
     }
 </style>

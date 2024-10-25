@@ -3,8 +3,8 @@
     "type": "module",
     "version": "0.0.1",
     "scripts": {
-        "dev": "astro --config ./astro.config.dev.mjs dev",
-        "build": "astro --config ./astro.config.mjs check && astro --config ./astro.config.mjs build",
+        "dev": "astro dev",
+        "build": "astro check && astro build",
         "preview": "astro preview",
         "astro": "astro",
         "hosting": "firebase deploy --only hosting",

@@ -91,7 +91,7 @@ const latestBlogs = (await getCollection("blogs"))
                     latestBlogs.map((blog) => (
                         <a
                             class="blog"
-                            href={`/blog/${blog.slug}`}
+                            href={`${import.meta.env.BASE_URL}/blog/${blog.slug}`}
                             target="_blank"
                         >
                             <h1 class="headline text-title-medium">

@@ -32,73 +32,71 @@ const tags = Array.from(
 <ProductHtml>
     <BaseHead slot="head" />
     <ViewTransitions slot="head" />
-        <ProductPage>
-            <BottomAppBar slot="bottom-app-bar" />
-            <NavigationRail slot="navigation-rail" />
-            <div class="sticky-header">
-                <Header>
-                    <HeaderTitle />
-                    <SwitchThemeIconButton slot="actions" />
-                    <HctPicker client:only="vue" slot="actions" />
-                </Header>
-                <HeaderDrop />
-            </div>
-            <div class="page-content">
-                <SearchCollection
-                    collection={blogs}
-                    baseUrl={`./blog/`}
-                    client:only="vue"
-                />
+    <ProductPage>
+        <BottomAppBar slot="bottom-app-bar" />
+        <NavigationRail slot="navigation-rail" />
+        <div class="sticky-header">
+            <Header>
+                <HeaderTitle />
+                <SwitchThemeIconButton slot="actions" />
+                <HctPicker client:only="vue" slot="actions" />
+            </Header>
+            <HeaderDrop />
+        </div>
+        <div class="page-content">
+            <SearchCollection
+                collection={blogs}
+                baseUrl={`./blog/`}
+                client:only="vue"
+            />
 
-                <md-chip-set class="tag-filter chip-set">
+            <md-chip-set class="tag-filter chip-set">
+                {
+                    tags.map((tag) => (
+                        <md-filter-chip class="filter-chip" label={tag} />
+                    ))
+                }
+            </md-chip-set>
+
+            <div class="collection-list">
+                <ul class="blog-list">
                     {
-                        tags.map((tag) => (
-                            <md-filter-chip class="filter-chip" label={tag} />
+                        blogs.map((blog) => (
+                            <a
+                                href={`${import.meta.env.BASE_URL}/blog/${blog.slug}`}
+                                class="blog-list-item"
+                                data-tags={blog.data.tags}
+                            >
+                                <section>
+                                    <h1 class="headline">
+                                        {blog.data.headline}
+                                    </h1>
+                                    <p class="description">
+                                        {blog.data.description}
+                                    </p>
+                                </section>
+                                <p class="file-name">{blog.slug}</p>
+                                {blog.data.tags.length !== 0 && (
+                                    <ul class="tags">
+                                        {blog.data.tags.map((tag: string) => (
+                                            <li class="tag">{tag}</li>
+                                        ))}
+                                    </ul>
+                                )}
+
+                                <md-ripple />
+                            </a>
                         ))
                     }
-                </md-chip-set>
-
-                <div class="collection-list">
-                    <ul class="blog-list">
-                        {
-                            blogs.map((blog) => (
-                                <a
-                                    href={`/blog/${blog.slug}`}
-                                    class="blog-list-item"
-                                    data-tags={blog.data.tags}
-                                >
-                                    <section>
-                                        <h1 class="headline">
-                                            {blog.data.headline}
-                                        </h1>
-                                        <p class="description">
-                                            {blog.data.description}
-                                        </p>
-                                    </section>
-                                    <p class="file-name">{blog.slug}</p>
-                                    {blog.data.tags.length !== 0 && (
-                                        <ul class="tags">
-                                            {blog.data.tags.map(
-                                                (tag: string) => (
-                                                    <li class="tag">{tag}</li>
-                                                ),
-                                            )}
-                                        </ul>
-                                    )}
-
-                                    <md-ripple />
-                                </a>
-                            ))
-                        }
-                    </ul>
-                </div>
-                <Footer />
+                </ul>
             </div>
-        </ProductPage>
+            <Footer />
+        </div>
+    </ProductPage>
 </ProductHtml>
 
 <script>
-    import type { MdChipSet, MdFilterChip } from "@material/web/all"
+    import type { MdChipSet, MdFilterChip } from "@material/web/all";
 
     const chipset = document.querySelector(".tag-filter.chip-set") as MdChipSet;
     const chips = Array.from(

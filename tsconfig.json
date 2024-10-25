@@ -21,26 +21,11 @@
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "verbatimModuleSyntax": true,
-        "baseUrl": ".",
-        "paths": {
-            "@core/*": [
-                "/src/core/*"
-            ],
-            "@shared/*": [
-                "/src/shared/*"
-            ],
-            "@pages/*": [
-                "/src/pages/*"
-            ],
-            "@layouts/*": [
-                "/src/layouts/*"
-            ],
-            "@styles/*": [
-                "/src/styles/*"
-            ],
-        }
     },
     "include": [
         "src/**/*.ts",
+        "src/**/*.vue",
+        "src/**/*.astro",
+        "src/**/*.js",
     ]
 }

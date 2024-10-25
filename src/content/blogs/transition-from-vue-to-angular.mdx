@@ -1,0 +1,231 @@
+---
+headline: Transition from Vue to Angular
+description: 从Vue过渡到Angular.
+creationTime: 2024/5/11
+pubDate: 2024/5/11
+heroImage: null
+tags: [angular, vue]
+collection: 'Angular'
+---
+
+_由于本人在Angular之前学习过Vue, 本文将会以"从Vue转向Angular"的角度介绍Angular._
+
+# 创建项目
+_Angular与Vue很大的不同点在创建项目上出现了. 编写Vue时几乎所有时刻都可以自己安装依赖而不需要cli, 仅仅需要vue, vite, typescript这三个依赖就可以启动初始项目. Angular项目的官方依赖没有过度耦合, 包很多, 通常不会手动一个一个安装依赖._
+
+```
+npm i -g angular-cli
+```
+
+```
+ng new angular-project
+```
+
+看看ng new为开发者创建的项目的依赖:
+```json
+"dependencies": {
+    "@angular/animations": "^18.0.0",
+    "@angular/common": "^18.0.0",
+    "@angular/compiler": "^18.0.0",
+    "@angular/core": "^18.0.0",
+    "@angular/forms": "^18.0.0",
+    "@angular/platform-browser": "^18.0.0",
+    "@angular/platform-browser-dynamic": "^18.0.0",
+    "@angular/router": "^18.0.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.14.3"
+},
+"devDependencies": {
+    "@angular-devkit/build-angular": "^18.0.1",
+    "@angular/cli": "^18.0.1",
+    "@angular/compiler-cli": "^18.0.0",
+    "@types/jasmine": "~5.1.0",
+    "autoprefixer": "^10.4.19",
+    "jasmine-core": "~5.1.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
+    "typescript": "~5.4.2"
+}
+```
+
+# 项目结构
+
+# 组件
+Angular中的组件与Vue的有很大的不同:
+
+|Compartion|Angular|Vue|
+|:--|:--|:--|
+|组件定义方式|通过`@Component`和`class`定义|通过SFC或`defineComponent`(或无类型提示的`{}`)定义|
+|组件使用方式|通过`selector`使用组件|通过import或`components`选项使用组件|
+|输入参数|通过`@Input`定义|通过`defineProps`或`props`声明|
+|输出事件|通过`@output`定义, 通过调用它的`emit(...)`激活|通过`defineEmits`或`emits`声明|
+|依赖注入|通过`Service`层和`inject`注入|通过`provide`和`inject`注入|
+
+## 创建组件
+可通过`angular-cli`来自动创建组件相应的文件:
+```
+ng generate component Button
+```
+
+或者手动地创建需要的文件:
+| File Name          | Description  | Optional |
+| :--------          | :----------  | --: |
+| *.component.ts     | 组件的具体定义 | Required |
+| *.component.spec.ts| 测试文件      | Optional |
+| *.component.css    | 样式         | Optional |
+| *.component.html   | 结构         | Optional |
+
+其中`*.component.css`, `*.component.html`, `*.component.spec.ts`是可选的, **`*.component.ts`是必须的**.
+
+## 定义组件
+Angular的组件通过TS装饰器`@Component`定义, 它接收**两个必要参数**和其它可选参数:
+
+|参数|描述|可选项|
+|:--|:--|--:|
+|`selector`|选择器, 作为使用该组件时的标签名|必须|
+|`template` or `templateUrl`|用于渲染DOM的HTML模板|必须|
+|`style`, `styleUrl` or `styleUrls`|CSS|可选|
+|`imports`|依赖|可选|
+|...|...|...|
+
+如下代码创建了一个Button组件:
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-button',
+  template: `
+    <button class="filled">I am a button</button>
+  `,
+  style: `
+    button.filled {
+        background-color: blue;
+        color: white;
+    }
+  `,
+  standalone: true,
+})
+export class ButtonComponent {
+}
+```
+_根据Google官方提供的说法,_
+
+
+## 使用组件
+使用组件的步骤:
+1. 引入组件
+2. 将需要的组件放在`imports`中
+3. 在模板中使用组件
+
+Angular不把import的名称作为组件标签名, 而是**把`selector`作为组件标签名**.
+
+```typescript
+// Angular
+
+/**
+ * @file home.component.ts
+ */
+import { Component } from '@angular/core';
+import { ComponentA } from './component-a.component';
+
+@Component({
+  selector: 'home',
+  standalone: true,
+  imports: [ComponentA],
+  template: `
+    <component-a></component-a>
+  `
+})
+export class HomeComponent {
+
+}
+
+/**
+ * @file component-a.component.ts
+ */
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'component-a',
+  template: ``,
+  standalone: true,
+})
+
+export class ComponentA {
+
+}
+
+```
+
+## 组件树
+Angular把匹配的每一个HTML元素创建一个组件实例. 组件实例的HTML模板在与`selector`匹配的DOM元素中渲染, 这个DOM元素被称为这个组件的宿主元素.
+组件渲染的DOM被称为该组件的视图, 多个组件构成组件树.
+
+要点: 
++ Angular为所有匹配的HTML元素创建一个组件实例
+  - 匹配发生在Angular编译时
+  - 运行时更改DOM不影响渲染结果
++ 与`selector`匹配的DOM元素是该组件的宿主元素
++ 组件渲染的DOM叫视图
++ 多个视图组合后叫组件树
+
+## Input
+`@Input()`作为组件的输入参数, 它提供更高的可重用性和变化.
+
+如下代码创建了一个TestProp组件, 接收一个可选参数`value`, 取值为`any`:
+```typescript
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-test-prop',
+  standalone: true,
+  imports: [],
+  template: `
+    <p>
+      PROP VALUES: {{ value }}
+    </p>
+  `
+})
+export class TestPropComponent {
+  @Input() value: any;
+}
+```
+
+这是提供参数到TestProp组件的方式:
+```html
+<section>
+    <app-test-prop value="123"></app-test-prop>
+</section>
+```
+
+## 可选参数
+`@Input()`默认为可选参数.
+
+## 必须参数
+向`@Input()`提供required参数:
+```typescript
+@Input({
+    required: true
+}) value: any;
+```
+
+## 类型检查
+由于Angular天生基于Typescript, 它直接支持类型检查:
+
+```typescript
+@Input() isOpen!: boolean;
+```
+
+```html
+<section>
+    <app-test-prop [isOpen]="true"></app-test-prop>
+</section>
+```
+
+## Output

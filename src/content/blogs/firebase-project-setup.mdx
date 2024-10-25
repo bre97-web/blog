@@ -1,0 +1,82 @@
+---
+headline: What's Firebase
+description: 利用firebase-cli创建并部署Hello world静态页面.
+creationTime: 2024/5/11
+pubDate: 2024/5/11
+heroImage: null
+tags: [firebase, static-page, setup, create project, web, hello world]
+collection: 'Firebase'
+---
+
+# Summary
+
+Firebase是Google提供的针对**移动**和**Web**的应用开发平台,
+它**提供了各种工具和服务**, 帮助开发者快速构建高质量的应用程序:
+
+- Realtime Database
+- Firestore
+- Functions
+- Authentication
+- Messaging
+- Remote Config
+- Analytics
+- ...
+
+以Realtime Database和Firestore举例, 它们是两种不同的数据库,
+开发者无需亲自搭建后端和数据库即可通过网络请求来远程访问数据库.
+
+# 创建Firebase project
+
+创建firebase项目需要通过Google官网, 确保你拥有Google账号.
+
+1. 下载firebase-cli
+2. 创建NodeJs项目(任意前端页面)
+3. 初始化firebase
+4. 创建index.html
+5. 部署到firebase
+
+这将全局安装firebase-cli工具:
+
+```
+npm i firebase-tools -G -D
+```
+
+这将创建你的项目文件夹和源代码 _(请在创建源代码后必要地编辑源代码)_:
+
+```
+New-Item your-project-folder-name -ItemType 'directory'
+```
+
+```
+New-Item index.html
+```
+
+这将在当前目录初始化firebase项目,
+回答必要的问题后将会由firebase-cli创建必要的配置文件
+_(创建完配置文件后请尝试修改firebase.json,
+将publish属性设置为部署文件所在文件夹位置)_:
+
+```
+firebase init
+```
+
+firebase.json参考文件
+
+```json
+{
+  "hosting": {
+    "public": "./",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
+```
+
+这将部署index.html到firebase
+
+```
+firebase deploy
+```

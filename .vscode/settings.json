@@ -1,46 +1,37 @@
 {
-    "files.eol": "\n",
-    "files.insertFinalNewline": true,
-    "css.format.newlineBetweenRules": true,
-    "html.format.wrapAttributes": "force-expand-multiline",
     "editor.formatOnSave": true,
-    "editor.tabSize": 4,
-    "editor.detectIndentation": false,
-    "editor.insertSpaces": true,
-    "editor.indentSize": 4,
     "editor.codeActionsOnSave": {
-        "source.fixAll": "always",
-        "source.fixAll.ts": "always",
+        "source.addMissingImports.ts": "always",
         "source.organizeImports": "always",
         "source.organizeLinkDefinitions": "always",
         "source.sortImports": "always",
-        "source.removeUnusedImports": "always",
+        "source.removeUnusedImports": "never",
+        "source.fixAll.markdownlint": "always"
     },
+    "editor.indentSize": 4,
+    "editor.tabSize": 4,
+    "editor.smoothScrolling": true,
     "editor.cursorSmoothCaretAnimation": "on",
-    "mdx.server.enable": true,
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-    "[astro]": {
-        "editor.defaultFormatter": "astro-build.astro-vscode"
-    },
-    "[css]": {
-        "editor.defaultFormatter": "vscode.css-language-features",
-    },
-    "[postcss]": {
-        "editor.defaultFormatter": "vscode.css-language-features",
-    },
-    "[html]": {
-        "editor.defaultFormatter": "vscode.html-language-features",
-    },
-    "[json]": {
-        "editor.defaultFormatter": "vscode.json-language-features"
-    },
-    "cSpell.words": [
-        "nanostores"
-    ],
-    "[jsonc]": {
-        "editor.defaultFormatter": "vscode.json-language-features"
-    },
-    "[vue]": {
-        "editor.defaultFormatter": "Vue.volar"
-    }
+    "workbench.list.smoothScrolling": true,
+    "terminal.integrated.smoothScrolling": true,
+    "javascript.format.enable": true,
+    "javascript.format.semicolons": "remove",
+    "typescript.format.enable": true,
+    "typescript.format.semicolons": "remove",
+    "typescript.format.indentSwitchCase": true,
+    "typescript.preferences.quoteStyle": "single",
+    "json.format.enable": true,
+    "html.format.enable": true,
+    "html.format.preserveNewLines": true,
+    "html.format.wrapAttributes": "force-expand-multiline",
+    "css.format.enable": true,
+    "scss.format.enable": true,
+    "files.encoding": "utf8",
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.autoSaveDelay": 2000,
+    "scss.format.braceStyle": "collapse",
+    "deno.enable": false,
+    "[astro]": {},
 }

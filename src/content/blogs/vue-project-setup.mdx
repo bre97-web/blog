@@ -1,0 +1,151 @@
+---
+headline: Creating your first vue project
+description: 认识Vue, 了解Vue的作用和特点,利用create-vite创建你的第一个Vue应用程序
+creationTime: 2024/5/11
+pubDate: 2024/5/11
+heroImage: null
+tags: [vue, vite, setup, create project, hello world]
+collection: 'Vue'
+---
+
+# 先决条件
+
+| Deps   | Version |
+| :----- | :------ |
+| NodeJs | >= 16   |
+
+# Summary
+
+Vue是一个**渐进式**的, **部分按照MVVM模型设计**的JavaScript框架.
+本文章将从以下几点介绍Vue:
+
+1. MVVM模型和Vue
+2. Vue的核心特点
+3. 使用create-vite创建你的第一个Vue应用程序
+
+# MVVM & Vue
+
+_Vue不是严格的MVVM模型的框架._
+
+MVVM模型包括三个部分:
+
+- Model
+- ViewModel
+- View
+
+## Model
+
+Model负责**管理数据**. Vue中的**data, computed, methods,
+setup可以视为Model部分**,
+在`.vue`文件中的`<script></script>`标签也可以视为Model部分.
+
+```typescript
+const componentA = defineComponent({
+  setup() {
+    const name = ref("I am component A");
+    return { name };
+  },
+  data: () => ({
+    message: "Hello Vue!",
+  }),
+  computed: {
+    reversedMessage() {
+      return this.message.split("").reverse().join("");
+    },
+  },
+  methods: {
+    reverseMessage() {
+      this.message = this.reversedMessage;
+    },
+  },
+});
+```
+
+```html
+<script setup lang="ts">
+const message = ref("Hello Vue!");
+const reversedMessage = computed(() => message.value.split("").reverse().join(""));
+const reverseMessage = () => {
+  message.value = reversedMessage.value;
+};
+</script>
+```
+
+# View
+
+View负责**将Model中的数据渲染成可读的图形界面**.
+Vue中的**template和render可以视为View部分**.
+
+- template提供声明式的视图编写方式
+- render提供可编程的视图编写方式
+
+```html
+<template>
+  <div>
+    <p>{{ message }}</p>
+  </div>
+</template>
+```
+
+```typescript
+const componentA = defineComponent({
+  data: () => ({
+    message: "Hello Vue!",
+  }),
+  template: `
+        <div>
+          <p>{{ message }}</p>
+        </div>
+    `,
+});
+```
+
+```typescript
+const componentA = defineComponent({
+  data: () => ({
+    message: "Hello Vue!",
+  }),
+  render() {
+    return h("div", [h("p", this.message)]);
+  },
+});
+```
+
+```typescript
+const componentA = defineComponent({
+  data: () => ({
+    message: "Hello Vue!",
+  }),
+  render() {
+    return (
+      <div>
+        <p>{this.message}</p>
+      </div>
+    );
+  },
+});
+```
+
+## ViewModel
+
+ViewModel负责**链接Model和View**. 在Vue中,
+**vue应用程序实例可以视为ViewModel角色**, vue实例在介入网页后追踪Model层的变化,
+并将Model层的变化反映到View层, 同时监听View层的交互,
+并将View层的交互反馈到Model层.
+
+```typescript
+const appInstance = createApp({
+  // ...
+});
+
+appInstance.mount("#root");
+```
+
+# Vue核心特点
+
+- Reactivity
+- Virtual DOM
+- Componentable
+
+```
+```
